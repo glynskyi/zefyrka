@@ -17,7 +17,7 @@ request or found a bug, please file it at the [issue tracker][].
 
 For documentation see [https://github.com/gkynskyi/zefyrka](https://github.com/glynskyi/zefyrka).
 
-![zefyrka screenshot](https://github.com/glynskyi/zefyrka/raw/main/packages/zefyr/zefyr.png)
+![zefyrka screenshot](https://github.com/glynskyi/zefyrka/raw/main/assets/zefyr-1.png)
 
 ## Installation
 
