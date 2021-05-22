@@ -12,11 +12,11 @@ bool isDisplaySmallDesktop(BuildContext context) {
 }
 
 class PageLayout extends StatefulWidget {
-  final Widget appBar;
-  final Widget menuBar;
-  final Widget body;
+  final Widget? appBar;
+  final Widget? menuBar;
+  final Widget? body;
 
-  const PageLayout({Key key, this.appBar, this.menuBar, this.body})
+  const PageLayout({Key? key, this.appBar, this.menuBar, this.body})
       : super(key: key);
 
   @override
@@ -39,11 +39,11 @@ class _PageLayoutState extends State<PageLayout> {
 }
 
 class _DesktopScaffold extends StatelessWidget {
-  final Widget appBar;
-  final Widget menuBar;
-  final Widget body;
+  final Widget? appBar;
+  final Widget? menuBar;
+  final Widget? body;
 
-  const _DesktopScaffold({Key key, this.appBar, this.menuBar, this.body})
+  const _DesktopScaffold({Key? key, this.appBar, this.menuBar, this.body})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _DesktopScaffold extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.grey.shade800),
             constraints: BoxConstraints(minWidth: 260, maxWidth: 260),
             child: Column(children: [
-              appBar,
+              appBar!,
               Divider(
                 height: 1,
                 color: Colors.white,
@@ -63,10 +63,10 @@ class _DesktopScaffold extends StatelessWidget {
                 indent: 16,
                 endIndent: 16,
               ),
-              Expanded(child: menuBar),
+              Expanded(child: menuBar!),
             ]),
           ),
-          Expanded(child: body)
+          Expanded(child: body!)
         ],
       ),
     );
@@ -74,17 +74,17 @@ class _DesktopScaffold extends StatelessWidget {
 }
 
 class _MobileScaffold extends StatelessWidget {
-  final Widget appBar;
-  final Widget menuBar;
-  final Widget body;
+  final Widget? appBar;
+  final Widget? menuBar;
+  final Widget? body;
 
-  const _MobileScaffold({Key key, this.appBar, this.menuBar, this.body})
+  const _MobileScaffold({Key? key, this.appBar, this.menuBar, this.body})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: appBar as PreferredSizeWidget?,
       drawer: Drawer(child: menuBar),
       body: body,
     );

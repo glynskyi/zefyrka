@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart' as pp;
 class Settings {
   /// Path to assets folder. If set then edits to any document within this
   /// application can be saved back to the assets folder.
-  final String assetsPath;
+  final String? assetsPath;
 
   Settings({this.assetsPath});
 
@@ -25,14 +25,14 @@ class Settings {
     if (await file.exists()) {
       final json = await file.readAsString();
       final data = jsonDecode(json) as Map<String, dynamic>;
-      return Settings(assetsPath: data['assetsPath'] as String);
+      return Settings(assetsPath: data['assetsPath'] as String?);
     }
     return Settings(assetsPath: '');
   }
 
-  static Settings of(BuildContext context) {
+  static Settings? of(BuildContext context) {
     final widget =
-        context.dependOnInheritedWidgetOfExactType<SettingsProvider>();
+        context.dependOnInheritedWidgetOfExactType<SettingsProvider>()!;
     return widget.settings;
   }
 
@@ -48,28 +48,28 @@ class Settings {
   }
 }
 
-Future<Settings> showSettingsDialog(BuildContext context, Settings settings) {
+Future<Settings?> showSettingsDialog(BuildContext context, Settings? settings) {
   return showDialog<Settings>(
       context: context, builder: (ctx) => SettingsDialog(settings: settings));
 }
 
 class SettingsDialog extends StatefulWidget {
-  final Settings settings;
+  final Settings? settings;
 
-  const SettingsDialog({Key key, @required this.settings}) : super(key: key);
+  const SettingsDialog({Key? key, required this.settings}) : super(key: key);
 
   @override
   _SettingsDialogState createState() => _SettingsDialogState();
 }
 
 class _SettingsDialogState extends State<SettingsDialog> {
-  String _assetsPath = '';
-  TextEditingController _assetsPathController;
+  String? _assetsPath = '';
+  TextEditingController? _assetsPathController;
 
   @override
   void initState() {
     super.initState();
-    _assetsPath = widget.settings.assetsPath;
+    _assetsPath = widget.settings!.assetsPath;
     _assetsPathController = TextEditingController(text: _assetsPath);
   }
 
@@ -110,9 +110,9 @@ class _SettingsDialogState extends State<SettingsDialog> {
 }
 
 class SettingsProvider extends InheritedWidget {
-  final Settings settings;
+  final Settings? settings;
 
-  SettingsProvider({Key key, this.settings, Widget child})
+  SettingsProvider({Key? key, this.settings, required Widget child})
       : super(key: key, child: child);
 
   @override

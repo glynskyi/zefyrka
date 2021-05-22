@@ -20,10 +20,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ZefyrController _controller;
+  ZefyrController? _controller;
   final FocusNode _focusNode = FocusNode();
 
-  Settings _settings;
+  Settings? _settings;
 
   void _handleSettingsLoaded(Settings value) {
     setState(() {
@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _save() async {
     final fs = LocalFileSystem();
-    final file = fs.directory(_settings.assetsPath).childFile('welcome.note');
-    final data = jsonEncode(_controller.document);
+    final file = fs.directory(_settings!.assetsPath).childFile('welcome.note');
+    final data = jsonEncode(_controller!.document);
     await file.writeAsString(data);
   }
 
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.settings, size: 16),
               onPressed: _showSettings,
             ),
-            if (_settings.assetsPath.isNotEmpty)
+            if (_settings!.assetsPath!.isNotEmpty)
               IconButton(
                 icon: Icon(Icons.save, size: 16),
                 onPressed: _save,
@@ -159,14 +159,14 @@ class _HomePageState extends State<HomePage> {
   Widget _buildWelcomeEditor(BuildContext context) {
     return Column(
       children: [
-        ZefyrToolbar.basic(controller: _controller),
+        ZefyrToolbar.basic(controller: _controller!),
         Divider(height: 1, thickness: 1, color: Colors.grey.shade200),
         Expanded(
           child: Container(
             color: Colors.white,
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             child: ZefyrEditor(
-              controller: _controller,
+              controller: _controller!,
               focusNode: _focusNode,
               autofocus: true,
               // readOnly: true,

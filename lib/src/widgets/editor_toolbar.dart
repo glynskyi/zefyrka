@@ -14,6 +14,7 @@ class InsertEmbedButton extends StatelessWidget {
     required this.controller,
     required this.icon,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ZIconButton(
@@ -112,6 +113,7 @@ class _LinkStyleButtonState extends State<LinkStyleButton> {
 
 class _LinkDialog extends StatefulWidget {
   const _LinkDialog({Key? key}) : super(key: key);
+
   @override
   _LinkDialogState createState() => _LinkDialogState();
 }
@@ -195,7 +197,8 @@ class _ToggleStyleButtonState extends State<ToggleStyleButton> {
 
   void _didChangeEditingValue() {
     setState(() {
-      _isToggled = widget.controller.getSelectionStyle().containsSame(widget.attribute);
+      _isToggled =
+          widget.controller.getSelectionStyle().containsSame(widget.attribute);
     });
   }
 
@@ -228,9 +231,12 @@ class _ToggleStyleButtonState extends State<ToggleStyleButton> {
     // toggle style buttons (except the code block button itself) since there
     // is no point in applying styles to a unformatted block of text.
     // TODO: Add code block checks to heading and embed buttons as well.
-    final isInCodeBlock = _selectionStyle.containsSame(NotusAttribute.block.code);
-    final isEnabled = !isInCodeBlock || widget.attribute == NotusAttribute.block.code;
-    return widget.childBuilder(context, widget.attribute, widget.icon, _isToggled, isEnabled ? _toggleAttribute : null);
+    final isInCodeBlock =
+        _selectionStyle.containsSame(NotusAttribute.block.code);
+    final isEnabled =
+        !isInCodeBlock || widget.attribute == NotusAttribute.block.code;
+    return widget.childBuilder(context, widget.attribute, widget.icon,
+        _isToggled, isEnabled ? _toggleAttribute : null);
   }
 
   void _toggleAttribute() {
@@ -276,10 +282,12 @@ Widget defaultToggleStyleButtonBuilder(
 class SelectHeadingStyleButton extends StatefulWidget {
   final ZefyrController controller;
 
-  const SelectHeadingStyleButton({Key? key, required this.controller}) : super(key: key);
+  const SelectHeadingStyleButton({Key? key, required this.controller})
+      : super(key: key);
 
   @override
-  _SelectHeadingStyleButtonState createState() => _SelectHeadingStyleButtonState();
+  _SelectHeadingStyleButtonState createState() =>
+      _SelectHeadingStyleButtonState();
 }
 
 class _SelectHeadingStyleButtonState extends State<SelectHeadingStyleButton> {
@@ -289,7 +297,8 @@ class _SelectHeadingStyleButtonState extends State<SelectHeadingStyleButton> {
 
   void _didChangeEditingValue() {
     setState(() {
-      _value = _selectionStyle.get(NotusAttribute.heading) ?? NotusAttribute.heading.unset;
+      _value = _selectionStyle.get(NotusAttribute.heading) ??
+          NotusAttribute.heading.unset;
     });
   }
 
@@ -300,7 +309,8 @@ class _SelectHeadingStyleButtonState extends State<SelectHeadingStyleButton> {
   @override
   void initState() {
     super.initState();
-    _value = _selectionStyle.get(NotusAttribute.heading) ?? NotusAttribute.heading.unset;
+    _value = _selectionStyle.get(NotusAttribute.heading) ??
+        NotusAttribute.heading.unset;
     widget.controller.addListener(_didChangeEditingValue);
   }
 
@@ -310,7 +320,8 @@ class _SelectHeadingStyleButtonState extends State<SelectHeadingStyleButton> {
     if (oldWidget.controller != widget.controller) {
       oldWidget.controller.removeListener(_didChangeEditingValue);
       widget.controller.addListener(_didChangeEditingValue);
-      _value = _selectionStyle.get(NotusAttribute.heading) ?? NotusAttribute.heading.unset;
+      _value = _selectionStyle.get(NotusAttribute.heading) ??
+          NotusAttribute.heading.unset;
     }
   }
 
@@ -326,8 +337,8 @@ class _SelectHeadingStyleButtonState extends State<SelectHeadingStyleButton> {
   }
 }
 
-Widget _selectHeadingStyleButtonBuilder(
-    BuildContext context, NotusAttribute? value, ValueChanged<NotusAttribute?> onSelected) {
+Widget _selectHeadingStyleButtonBuilder(BuildContext context,
+    NotusAttribute? value, ValueChanged<NotusAttribute?> onSelected) {
   final style = TextStyle(fontSize: 12);
 
   final valueToText = {
@@ -393,7 +404,7 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
       bool hideHorizontalRule = false}) {
     return ZefyrToolbar(key: key, children: [
       Visibility(
-        visible: hideBoldButton,
+        visible: !hideBoldButton,
         child: ToggleStyleButton(
           attribute: NotusAttribute.bold,
           icon: Icons.format_bold,
@@ -402,7 +413,7 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
       ),
       SizedBox(width: 1),
       Visibility(
-        visible: hideItalicButton,
+        visible: !hideItalicButton,
         child: ToggleStyleButton(
           attribute: NotusAttribute.italic,
           icon: Icons.format_italic,
@@ -411,7 +422,7 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
       ),
       SizedBox(width: 1),
       Visibility(
-        visible: hideUnderLineButton,
+        visible: !hideUnderLineButton,
         child: ToggleStyleButton(
           attribute: NotusAttribute.underline,
           icon: Icons.format_underline,
@@ -420,7 +431,7 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
       ),
       SizedBox(width: 1),
       Visibility(
-        visible: hideStrikeThrough,
+        visible: !hideStrikeThrough,
         child: ToggleStyleButton(
           attribute: NotusAttribute.strikethrough,
           icon: Icons.format_strikethrough,
@@ -428,11 +439,15 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
         ),
       ),
       Visibility(
-          visible: hideHeadingStyle, child: VerticalDivider(indent: 16, endIndent: 16, color: Colors.grey.shade400)),
-      Visibility(visible: hideHeadingStyle, child: SelectHeadingStyleButton(controller: controller)),
+          visible: !hideHeadingStyle,
+          child: VerticalDivider(
+              indent: 16, endIndent: 16, color: Colors.grey.shade400)),
+      Visibility(
+          visible: !hideHeadingStyle,
+          child: SelectHeadingStyleButton(controller: controller)),
       VerticalDivider(indent: 16, endIndent: 16, color: Colors.grey.shade400),
       Visibility(
-        visible: hideListNumbers,
+        visible: !hideListNumbers,
         child: ToggleStyleButton(
           attribute: NotusAttribute.block.numberList,
           controller: controller,
@@ -440,7 +455,7 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
         ),
       ),
       Visibility(
-        visible: hideListBullets,
+        visible: !hideListBullets,
         child: ToggleStyleButton(
           attribute: NotusAttribute.block.bulletList,
           controller: controller,
@@ -448,7 +463,7 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
         ),
       ),
       Visibility(
-        visible: hideCodeBlock,
+        visible: !hideCodeBlock,
         child: ToggleStyleButton(
           attribute: NotusAttribute.block.code,
           controller: controller,
@@ -456,20 +471,25 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
         ),
       ),
       Visibility(
-          visible: !hideListNumbers && !hideListBullets && !hideCodeBlock,
-          child: VerticalDivider(indent: 16, endIndent: 16, color: Colors.grey.shade400)),
+          visible: !hideListNumbers || !hideListBullets || !hideCodeBlock,
+          child: VerticalDivider(
+              indent: 16, endIndent: 16, color: Colors.grey.shade400)),
       Visibility(
-        visible: hideQuote,
+        visible: !hideQuote,
         child: ToggleStyleButton(
           attribute: NotusAttribute.block.quote,
           controller: controller,
           icon: Icons.format_quote,
         ),
       ),
-      Visibility(visible: hideQuote, child: VerticalDivider(indent: 16, endIndent: 16, color: Colors.grey.shade400)),
-      Visibility(visible: hideLink, child: LinkStyleButton(controller: controller)),
       Visibility(
-        visible: hideHorizontalRule,
+          visible: !hideQuote,
+          child: VerticalDivider(
+              indent: 16, endIndent: 16, color: Colors.grey.shade400)),
+      Visibility(
+          visible: !hideLink, child: LinkStyleButton(controller: controller)),
+      Visibility(
+        visible: !hideHorizontalRule,
         child: InsertEmbedButton(
           controller: controller,
           icon: Icons.horizontal_rule,
@@ -589,21 +609,25 @@ class _ZDropdownButtonState<T> extends State<ZDropdownButton<T>> {
   void _showMenu() {
     final popupMenuTheme = PopupMenuTheme.of(context);
     final button = context.findRenderObject() as RenderBox;
-    final overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
+    final overlay =
+        Overlay.of(context)!.context.findRenderObject() as RenderBox;
     final position = RelativeRect.fromRect(
       Rect.fromPoints(
         button.localToGlobal(Offset.zero, ancestor: overlay),
-        button.localToGlobal(button.size.bottomLeft(Offset.zero), ancestor: overlay),
+        button.localToGlobal(button.size.bottomLeft(Offset.zero),
+            ancestor: overlay),
       ),
       Offset.zero & overlay.size,
     );
     showMenu<T>(
       context: context,
-      elevation: 4, // widget.elevation ?? popupMenuTheme.elevation,
+      elevation: 4,
+      // widget.elevation ?? popupMenuTheme.elevation,
       initialValue: widget.initialValue,
       items: widget.items,
       position: position,
-      shape: popupMenuTheme.shape, // widget.shape ?? popupMenuTheme.shape,
+      shape: popupMenuTheme.shape,
+      // widget.shape ?? popupMenuTheme.shape,
       color: popupMenuTheme.color, // widget.color ?? popupMenuTheme.color,
       // captureInheritedThemes: widget.captureInheritedThemes,
     ).then((T? newValue) {
@@ -624,7 +648,11 @@ class _ZDropdownButtonState<T> extends State<ZDropdownButton<T>> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
-          children: [widget.child, Expanded(child: Container()), Icon(Icons.arrow_drop_down, size: 14)],
+          children: [
+            widget.child,
+            Expanded(child: Container()),
+            Icon(Icons.arrow_drop_down, size: 14)
+          ],
         ),
       ),
     );
