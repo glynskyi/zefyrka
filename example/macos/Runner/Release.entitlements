@@ -3,6 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.security.network.client</key>
+	<key>com.apple.security.app-sandbox</key>
 	<true/>
 </dict>
 </plist>
