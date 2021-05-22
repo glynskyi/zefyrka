@@ -5,6 +5,7 @@
 *.code-workspace
 .packages
 .pub/
+.dart_tool
 packages
 pubspec.lock
 coverage/
