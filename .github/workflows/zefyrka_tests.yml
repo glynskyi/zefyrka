@@ -1,0 +1,45 @@
+name: Dart CI
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  google/dart:2.12
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1.4.0
+
+      - name: Switch to master channel
+        run: flutter channel master
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze code
+        run: dartanalyzer --fatal-infos --fatal-warnings ./lib
+
+      - name: Check code format
+        run: dart format -o none --set-exit-if-changed ./lib
+
+      - name: Run tests
+        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+
+#      - name: Check code coverage
+#        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+#        with:
+#          path: coverage/lcov.info
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
