@@ -22,11 +22,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Analyze code
-        run: dartanalyzer --fatal-infos --fatal-warnings ./lib
-
-      - name: Check code format
-        run: dart format -o none --set-exit-if-changed ./lib
+#      - name: Analyze code
+#        run: dartanalyzer --fatal-infos --fatal-warnings ./lib
+#
+#      - name: Check code format
+#        run: dart format -o none --set-exit-if-changed ./lib
 
       - name: Run tests
         run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
