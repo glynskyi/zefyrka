@@ -82,7 +82,8 @@ class CursorPainter {
     if (style.radius == null) {
       canvas.drawRect(caretRect, paint);
     } else {
-      final RRect caretRRect = RRect.fromRectAndRadius(caretRect, style.radius!);
+      final RRect caretRRect =
+          RRect.fromRectAndRadius(caretRect, style.radius!);
       canvas.drawRRect(caretRRect, paint);
     }
   }

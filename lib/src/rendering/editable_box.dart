@@ -17,7 +17,9 @@ abstract class RenderContentProxyBox implements RenderBox {
   double get preferredLineHeight;
 
   Offset getOffsetForCaret(TextPosition position, Rect caretPrototype);
+
   TextPosition getPositionForOffset(Offset offset);
+
   double? getFullHeightForCaret(TextPosition position);
 
   TextRange getWordBoundary(TextPosition position);
@@ -159,6 +161,7 @@ class RenderEditableContainerBox extends RenderBox
 
   ContainerNode get node => _node;
   ContainerNode _node;
+
   set node(ContainerNode value) {
     assert(value != null);
     if (_node == value) return;
@@ -168,6 +171,7 @@ class RenderEditableContainerBox extends RenderBox
 
   TextDirection get textDirection => _textDirection;
   TextDirection _textDirection;
+
   set textDirection(TextDirection value) {
     if (_textDirection == value) {
       return;
@@ -183,6 +187,7 @@ class RenderEditableContainerBox extends RenderBox
   /// must not be null.
   EdgeInsetsGeometry get padding => _padding;
   EdgeInsetsGeometry _padding;
+
   set padding(EdgeInsetsGeometry value) {
     assert(value != null);
     assert(value.isNonNegative);
@@ -210,6 +215,7 @@ class RenderEditableContainerBox extends RenderBox
     _resolvedPadding = null;
     markNeedsLayout();
   }
+
   // End padding implementation
 
   /// Returns child of this container at specified `position` in text.
@@ -304,7 +310,8 @@ class RenderEditableContainerBox extends RenderBox
             .deflate(_resolvedPadding!);
     while (child != null) {
       child.layout(innerConstraints, parentUsesSize: true);
-      final EditableContainerParentData childParentData = child.parentData as EditableContainerParentData;
+      final EditableContainerParentData childParentData =
+          child.parentData as EditableContainerParentData;
       childParentData.offset = Offset(_resolvedPadding!.left, mainAxisExtent);
       mainAxisExtent += child.size.height;
       assert(child.parentData == childParentData);
@@ -327,7 +334,8 @@ class RenderEditableContainerBox extends RenderBox
     var child = firstChild;
     while (child != null) {
       extent = math.max(extent, childSize(child));
-      final EditableContainerParentData childParentData = child.parentData as EditableContainerParentData;
+      final EditableContainerParentData childParentData =
+          child.parentData as EditableContainerParentData;
       child = childParentData.nextSibling;
     }
     return extent;
@@ -338,7 +346,8 @@ class RenderEditableContainerBox extends RenderBox
     var child = firstChild;
     while (child != null) {
       extent += childSize(child);
-      final EditableContainerParentData childParentData = child.parentData as EditableContainerParentData;
+      final EditableContainerParentData childParentData =
+          child.parentData as EditableContainerParentData;
       child = childParentData.nextSibling;
     }
     return extent;
