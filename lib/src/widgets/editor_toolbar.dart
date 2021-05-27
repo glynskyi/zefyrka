@@ -181,9 +181,6 @@ class ToggleStyleButton extends StatefulWidget {
     required this.controller,
     this.childBuilder = defaultToggleStyleButtonBuilder,
   })  : assert(!attribute.isUnset),
-        assert(icon != null),
-        assert(controller != null),
-        assert(childBuilder != null),
         super(key: key);
 
   @override
@@ -569,7 +566,7 @@ class ZDropdownButton<T> extends StatefulWidget {
   final Widget child;
   final T initialValue;
   final List<PopupMenuEntry<T>> items;
-  final ValueChanged<T> onSelected;
+  final ValueChanged<T>? onSelected;
 
   const ZDropdownButton({
     Key? key,
@@ -636,9 +633,7 @@ class _ZDropdownButtonState<T> extends State<ZDropdownButton<T>> {
         // if (widget.onCanceled != null) widget.onCanceled();
         return null;
       }
-      if (widget.onSelected != null) {
-        widget.onSelected(newValue);
-      }
+      widget.onSelected?.call(newValue);
     });
   }
 

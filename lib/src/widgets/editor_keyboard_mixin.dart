@@ -70,7 +70,8 @@ int nextCharacter(int index, String string, [bool includeWhitespace = true]) {
   }
 
   int count = 0;
-  final Characters remaining = string.characters.skipWhile((String currentString) {
+  final Characters remaining =
+      string.characters.skipWhile((String currentString) {
     if (count <= index) {
       count += currentString.length;
       return true;
@@ -94,7 +95,8 @@ int nextCharacter(int index, String string, [bool includeWhitespace = true]) {
 ///
 /// Setting includeWhitespace to false will only return the index of non-space
 /// characters.
-int previousCharacter(int index, String string, [bool includeWhitespace = true]) {
+int previousCharacter(int index, String string,
+    [bool includeWhitespace = true]) {
   assert(index >= 0 && index <= string.length);
   if (index == 0) {
     return 0;
@@ -103,7 +105,9 @@ int previousCharacter(int index, String string, [bool includeWhitespace = true])
   int count = 0;
   int? lastNonWhitespace;
   for (final String currentString in string.characters) {
-    if (!includeWhitespace && !_isWhitespace(currentString.characters.first.toString().codeUnitAt(0))) {
+    if (!includeWhitespace &&
+        !_isWhitespace(
+            currentString.characters.first.toString().codeUnitAt(0))) {
       lastNonWhitespace = count;
     }
     if (count + currentString.length >= index) {
@@ -142,7 +146,6 @@ mixin RawEditorStateKeyboardMixin on EditorState {
       return;
     }
     final selection = widget.controller.selection;
-    assert(selection != null);
 
     TextSelection newSelection = widget.controller.selection;
 
@@ -163,17 +166,23 @@ mixin RawEditorStateKeyboardMixin on EditorState {
           // so we go back to the first non-whitespace before asking for the word
           // boundary, since _selectWordAtOffset finds the word boundaries without
           // including whitespace.
-          final int startPoint = previousCharacter(newSelection.extentOffset, plainText, false);
-          final TextSelection textSelection = renderEditor!.selectWordAtPosition(TextPosition(offset: startPoint));
-          newSelection = newSelection.copyWith(extentOffset: textSelection.baseOffset);
+          final int startPoint =
+              previousCharacter(newSelection.extentOffset, plainText, false);
+          final TextSelection textSelection = renderEditor!
+              .selectWordAtPosition(TextPosition(offset: startPoint));
+          newSelection =
+              newSelection.copyWith(extentOffset: textSelection.baseOffset);
         } else {
           // When going right, we want to skip over any whitespace after the word,
           // so we go forward to the first non-whitespace character before asking
           // for the word bounds, since _selectWordAtOffset finds the word
           // boundaries without including whitespace.
-          final int startPoint = nextCharacter(newSelection.extentOffset, plainText, false);
-          final TextSelection textSelection = renderEditor!.selectWordAtPosition(TextPosition(offset: startPoint));
-          newSelection = newSelection.copyWith(extentOffset: textSelection.extentOffset);
+          final int startPoint =
+              nextCharacter(newSelection.extentOffset, plainText, false);
+          final TextSelection textSelection = renderEditor!
+              .selectWordAtPosition(TextPosition(offset: startPoint));
+          newSelection =
+              newSelection.copyWith(extentOffset: textSelection.extentOffset);
         }
       } else if (lineModifier) {
         // If control/command is pressed, we will decide which way to expand to
@@ -181,9 +190,12 @@ mixin RawEditorStateKeyboardMixin on EditorState {
         if (leftArrow) {
           // When going left.
           // This is not the optimal approach, see comment below for details.
-          final int startPoint = previousCharacter(newSelection.extentOffset, plainText, false);
-          final TextSelection textSelection = renderEditor!.selectLineAtPosition(TextPosition(offset: startPoint));
-          newSelection = newSelection.copyWith(extentOffset: textSelection.baseOffset);
+          final int startPoint =
+              previousCharacter(newSelection.extentOffset, plainText, false);
+          final TextSelection textSelection = renderEditor!
+              .selectLineAtPosition(TextPosition(offset: startPoint));
+          newSelection =
+              newSelection.copyWith(extentOffset: textSelection.baseOffset);
         } else {
           // When going right, look to the right from current position until
           // we find the end of the line.
@@ -196,20 +208,24 @@ mixin RawEditorStateKeyboardMixin on EditorState {
           // largest right edge of all the remaining boxes.
           final int startPoint = newSelection.extentOffset;
           if (startPoint < plainText.length) {
-            final TextSelection textSelection = renderEditor!.selectLineAtPosition(TextPosition(offset: startPoint));
-            newSelection = newSelection.copyWith(extentOffset: textSelection.extentOffset);
+            final TextSelection textSelection = renderEditor!
+                .selectLineAtPosition(TextPosition(offset: startPoint));
+            newSelection =
+                newSelection.copyWith(extentOffset: textSelection.extentOffset);
           }
         }
       } else {
         if (rightArrow && newSelection.extentOffset < plainText.length) {
-          final int nextExtent = nextCharacter(newSelection.extentOffset, plainText);
+          final int nextExtent =
+              nextCharacter(newSelection.extentOffset, plainText);
           final int distance = nextExtent - newSelection.extentOffset;
           newSelection = newSelection.copyWith(extentOffset: nextExtent);
           if (shift) {
             _cursorResetLocation += distance;
           }
         } else if (leftArrow && newSelection.extentOffset > 0) {
-          final int previousExtent = previousCharacter(newSelection.extentOffset, plainText);
+          final int previousExtent =
+              previousCharacter(newSelection.extentOffset, plainText);
           final int distance = newSelection.extentOffset - previousExtent;
           newSelection = newSelection.copyWith(extentOffset: previousExtent);
           if (shift) {
@@ -223,31 +239,40 @@ mixin RawEditorStateKeyboardMixin on EditorState {
     // case where the user moves the cursor to the end or beginning of the text
     // and then back up or down.
     if (downArrow || upArrow) {
-      final originPosition = TextPosition(offset: upArrow ? selection.baseOffset : selection.extentOffset);
+      final originPosition = TextPosition(
+          offset: upArrow ? selection.baseOffset : selection.extentOffset);
 
       final child = renderEditor!.childAtPosition(originPosition)!;
-      final localPosition = TextPosition(offset: originPosition.offset - child.node.documentOffset);
+      final localPosition = TextPosition(
+          offset: originPosition.offset - child.node.documentOffset);
 
-      TextPosition? position = upArrow ? child.getPositionAbove(localPosition) : child.getPositionBelow(localPosition);
+      TextPosition? position = upArrow
+          ? child.getPositionAbove(localPosition)
+          : child.getPositionBelow(localPosition);
 
       if (position == null) {
         // There was no text above/below in the current child, check the direct
         // sibling.
-        final sibling = upArrow ? renderEditor!.childBefore(child) : renderEditor!.childAfter(child);
+        final sibling = upArrow
+            ? renderEditor!.childBefore(child)
+            : renderEditor!.childAfter(child);
         if (sibling == null) {
           // reached beginning or end of the document, move to the
           // first/last character
           position = TextPosition(offset: upArrow ? 0 : plainText.length - 1);
         } else {
           final caretOffset = child.getOffsetForCaret(localPosition);
-          final testPosition = TextPosition(offset: upArrow ? sibling.node.length - 1 : 0);
+          final testPosition =
+              TextPosition(offset: upArrow ? sibling.node.length - 1 : 0);
           final testOffset = sibling.getOffsetForCaret(testPosition);
           final finalOffset = Offset(caretOffset.dx, testOffset.dy);
           final siblingPosition = sibling.getPositionForOffset(finalOffset);
-          position = TextPosition(offset: sibling.node.documentOffset + siblingPosition.offset);
+          position = TextPosition(
+              offset: sibling.node.documentOffset + siblingPosition.offset);
         }
       } else {
-        position = TextPosition(offset: child.node.documentOffset + position.offset);
+        position =
+            TextPosition(offset: child.node.documentOffset + position.offset);
       }
 
       // To account for the possibility where the user vertically highlights
@@ -262,7 +287,8 @@ mixin RawEditorStateKeyboardMixin on EditorState {
         }
         _wasSelectingVerticallyWithKeyboard = shift;
       } else if (_wasSelectingVerticallyWithKeyboard && shift) {
-        newSelection = newSelection.copyWith(extentOffset: _cursorResetLocation);
+        newSelection =
+            newSelection.copyWith(extentOffset: _cursorResetLocation);
         _wasSelectingVerticallyWithKeyboard = false;
       } else {
         newSelection = newSelection.copyWith(extentOffset: position.offset);
@@ -278,14 +304,17 @@ mixin RawEditorStateKeyboardMixin on EditorState {
       int newOffset = newSelection.extentOffset;
       if (!selection.isCollapsed) {
         if (leftArrow) {
-          newOffset =
-              newSelection.baseOffset < newSelection.extentOffset ? newSelection.baseOffset : newSelection.extentOffset;
+          newOffset = newSelection.baseOffset < newSelection.extentOffset
+              ? newSelection.baseOffset
+              : newSelection.extentOffset;
         } else if (rightArrow) {
-          newOffset =
-              newSelection.baseOffset > newSelection.extentOffset ? newSelection.baseOffset : newSelection.extentOffset;
+          newOffset = newSelection.baseOffset > newSelection.extentOffset
+              ? newSelection.baseOffset
+              : newSelection.extentOffset;
         }
       }
-      newSelection = TextSelection.fromPosition(TextPosition(offset: newOffset));
+      newSelection =
+          TextSelection.fromPosition(TextPosition(offset: newOffset));
     }
 
     widget.controller.updateSelection(newSelection, source: ChangeSource.local);
@@ -303,7 +332,8 @@ mixin RawEditorStateKeyboardMixin on EditorState {
       return;
     }
     if (shortcut == InputShortcut.cut && !widget.readOnly) {
-      final updatedEditingValue = clipboardController.cut(widget.controller, plainText);
+      final updatedEditingValue =
+          clipboardController.cut(widget.controller, plainText);
       if (updatedEditingValue != null) {
         textEditingValue = updatedEditingValue;
       }
@@ -315,7 +345,8 @@ mixin RawEditorStateKeyboardMixin on EditorState {
       clipboardController.paste(widget.controller, textEditingValue);
       return;
     }
-    if (shortcut == InputShortcut.selectAll && widget.enableInteractiveSelection) {
+    if (shortcut == InputShortcut.selectAll &&
+        widget.enableInteractiveSelection) {
       final newSelection = widget.controller.selection.copyWith(
         baseOffset: 0,
         extentOffset: textEditingValue.text.length,
@@ -328,14 +359,14 @@ mixin RawEditorStateKeyboardMixin on EditorState {
   void handleDelete(bool forward) {
     final selection = widget.controller.selection;
     final plainText = textEditingValue.text;
-    assert(selection != null);
     int cursorPosition = selection.start;
     String textBefore = selection.textBefore(plainText);
     String textAfter = selection.textAfter(plainText);
     // If not deleting a selection, delete the next/previous character.
     if (selection.isCollapsed) {
       if (!forward && textBefore.isNotEmpty) {
-        final int characterBoundary = previousCharacter(textBefore.length, textBefore);
+        final int characterBoundary =
+            previousCharacter(textBefore.length, textBefore);
         textBefore = textBefore.substring(0, characterBoundary);
         cursorPosition = characterBoundary;
       }

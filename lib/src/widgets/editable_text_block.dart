@@ -38,9 +38,7 @@ class EditableTextBlock extends StatelessWidget {
     this.contentPadding,
     required this.embedBuilder,
     required this.checkboxListener,
-  })  : assert(hasFocus != null),
-        assert(embedBuilder != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +86,8 @@ class EditableTextBlock extends StatelessWidget {
   }
 
   TextAlign _buildParagraphAlignment(LineNode node) {
-    final alignment = node.style.get(NotusAttribute.alignment as NotusAttributeKey<String>);
+    final alignment =
+        node.style.get(NotusAttribute.alignment as NotusAttributeKey<String>);
     if (alignment == NotusAttribute.alignment.end) {
       return TextAlign.end;
     } else if (alignment == NotusAttribute.alignment.justify) {
@@ -100,9 +99,11 @@ class EditableTextBlock extends StatelessWidget {
     }
   }
 
-  Widget? _buildLeading(BuildContext context, LineNode node, int index, int count) {
+  Widget? _buildLeading(
+      BuildContext context, LineNode node, int index, int count) {
     final theme = ZefyrTheme.of(context);
-    final block = node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+    final block =
+        node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
     if (block == NotusAttribute.block.numberList) {
       return _NumberPoint(
         index: index,
@@ -127,7 +128,8 @@ class EditableTextBlock extends StatelessWidget {
       return _NumberPoint(
         index: index,
         count: count,
-        style: theme!.code.style.copyWith(color: theme.code.style.color!.withOpacity(0.4)),
+        style: theme!.code.style
+            .copyWith(color: theme.code.style.color!.withOpacity(0.4)),
         width: 32.0,
         padding: 16.0,
         withDot: false,
@@ -139,11 +141,13 @@ class EditableTextBlock extends StatelessWidget {
 
   double _getIndentWidth(LineNode line) {
     int additionalIndent = 0;
-    final indent = line.style.get(NotusAttribute.indent as NotusAttributeKey<int>);
+    final indent =
+        line.style.get(NotusAttribute.indent as NotusAttributeKey<int>);
     if (indent != null) {
       additionalIndent = indent.value!;
     }
-    final block = node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+    final block =
+        node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
     if (block == NotusAttribute.block.quote) {
       return 16.0 + additionalIndent;
     } else if (block == NotusAttribute.block.code) {
@@ -153,8 +157,10 @@ class EditableTextBlock extends StatelessWidget {
     }
   }
 
-  VerticalSpacing _getSpacingForLine(LineNode node, int index, int count, ZefyrThemeData? theme) {
-    final heading = node.style.get(NotusAttribute.heading as NotusAttributeKey<int>);
+  VerticalSpacing _getSpacingForLine(
+      LineNode node, int index, int count, ZefyrThemeData? theme) {
+    final heading =
+        node.style.get(NotusAttribute.heading as NotusAttributeKey<int>);
 
     double? top = 0.0;
     double? bottom = 0.0;
@@ -169,7 +175,10 @@ class EditableTextBlock extends StatelessWidget {
       top = theme!.heading3.spacing.top;
       bottom = theme.heading3.spacing.bottom;
     } else {
-      final block = this.node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+      final block = this
+          .node
+          .style
+          .get(NotusAttribute.block as NotusAttributeKey<String>);
       late var lineSpacing;
       if (block == NotusAttribute.block.quote) {
         lineSpacing = theme!.quote.lineSpacing;
@@ -177,7 +186,8 @@ class EditableTextBlock extends StatelessWidget {
           block == NotusAttribute.block.bulletList ||
           block == NotusAttribute.block.checkList) {
         lineSpacing = theme!.lists.lineSpacing;
-      } else if (block == NotusAttribute.block.code || block == NotusAttribute.block.code) {
+      } else if (block == NotusAttribute.block.code ||
+          block == NotusAttribute.block.code) {
         lineSpacing = theme!.lists.lineSpacing;
       }
       top = lineSpacing.top;
@@ -199,7 +209,8 @@ class EditableTextBlock extends StatelessWidget {
   }
 
   BoxDecoration? _getDecorationForBlock(BlockNode node, ZefyrThemeData? theme) {
-    final style = node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+    final style =
+        node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
     if (style == NotusAttribute.block.quote) {
       return theme!.quote.decoration;
     } else if (style == NotusAttribute.block.code) {
@@ -226,7 +237,8 @@ class _EditableBlock extends MultiChildRenderObjectWidget {
     required List<Widget> children,
   }) : super(key: key, children: children);
 
-  EdgeInsets get _padding => EdgeInsets.only(top: padding.top!, bottom: padding.bottom!);
+  EdgeInsets get _padding =>
+      EdgeInsets.only(top: padding.top!, bottom: padding.bottom!);
 
   EdgeInsets get _contentPadding => contentPadding ?? EdgeInsets.zero;
 
@@ -242,7 +254,8 @@ class _EditableBlock extends MultiChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, covariant RenderEditableTextBlock renderObject) {
+  void updateRenderObject(
+      BuildContext context, covariant RenderEditableTextBlock renderObject) {
     renderObject.node = node;
     renderObject.textDirection = textDirection;
     renderObject.padding = _padding;
@@ -350,7 +363,8 @@ class _CheckboxPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rrect = RRect.fromLTRBR(0, 0, size.width, size.height, Radius.circular(3));
+    final rrect =
+        RRect.fromLTRBR(0, 0, size.width, size.height, Radius.circular(3));
     canvas.drawRRect(rrect, _paint);
     if (_checked == true) {
       final padding = _paint.strokeWidth * 2;

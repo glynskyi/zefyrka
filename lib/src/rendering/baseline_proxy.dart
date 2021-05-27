@@ -1,5 +1,4 @@
 import 'package:flutter/rendering.dart';
-import 'package:meta/meta.dart';
 
 class RenderBaselineProxy extends RenderProxyBox {
   RenderBaselineProxy({
@@ -16,15 +15,14 @@ class RenderBaselineProxy extends RenderProxyBox {
   final TextPainter _prototypePainter;
 
   set textStyle(TextStyle value) {
-    assert(value != null);
     if (_prototypePainter.text!.style == value) return;
     _prototypePainter.text = TextSpan(text: ' ', style: value);
     markNeedsLayout();
   }
 
   EdgeInsets? _padding;
+
   set padding(EdgeInsets value) {
-    assert(value != null);
     if (_padding == value) return;
     _padding = value;
     markNeedsLayout();

@@ -1,5 +1,4 @@
 import 'package:flutter/rendering.dart';
-import 'package:meta/meta.dart';
 
 import 'editable_box.dart';
 
@@ -31,21 +30,18 @@ class RenderParagraphProxy extends RenderProxyBox
   final TextPainter _prototypePainter;
 
   set textStyle(TextStyle value) {
-    assert(value != null);
     if (_prototypePainter.text!.style == value) return;
     _prototypePainter.text = TextSpan(text: ' ', style: value);
     markNeedsLayout();
   }
 
   set textAlign(TextAlign value) {
-    assert(value != null);
     if (_prototypePainter.textAlign == value) return;
     _prototypePainter.textAlign = value;
     markNeedsLayout();
   }
 
   set textDirection(TextDirection value) {
-    assert(value != null);
     if (_prototypePainter.textDirection == value) return;
     _prototypePainter.textDirection = value;
     markNeedsLayout();
@@ -59,7 +55,6 @@ class RenderParagraphProxy extends RenderProxyBox
   }
 
   set strutStyle(StrutStyle value) {
-    assert(value != null);
     if (_prototypePainter.strutStyle == value) return;
     _prototypePainter.strutStyle = value;
     markNeedsLayout();
@@ -72,7 +67,6 @@ class RenderParagraphProxy extends RenderProxyBox
   }
 
   set textWidthBasis(TextWidthBasis value) {
-    assert(value != null);
     if (_prototypePainter.textWidthBasis == value) return;
     _prototypePainter.textWidthBasis = value;
     markNeedsLayout();

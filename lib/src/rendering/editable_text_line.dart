@@ -36,12 +36,7 @@ class RenderEditableTextLine extends RenderEditableBox {
         const EdgeInsets.fromLTRB(4, 4, 4, 5),
 //    TextRange promptRectRange,
 //    Color promptRectColor,
-  })  : assert(node != null),
-        assert(padding != null),
-        assert(padding.isNonNegative),
-        assert(cursorController != null),
-        assert(devicePixelRatio != null),
-        assert(hasFocus != null),
+  })  : assert(padding.isNonNegative),
         _textDirection = textDirection,
         _padding = padding,
         _node = node,
@@ -66,6 +61,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// manipulate the selection will throw.
   TextSelection get selection => _selection;
   TextSelection _selection;
+
   set selection(TextSelection value) {
     if (_selection == value) return;
     final hadSelection = containsSelection;
@@ -89,6 +85,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// The color to use when painting the selection.
   Color? get selectionColor => _selectionColor;
   Color? _selectionColor;
+
   set selectionColor(Color? value) {
     if (_selectionColor == value) return;
     _selectionColor = value;
@@ -108,6 +105,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// the accessibility hints mentioned above).
   bool? get enableInteractiveSelection => _enableInteractiveSelection;
   bool? _enableInteractiveSelection;
+
   set enableInteractiveSelection(bool? value) {
     if (_enableInteractiveSelection == value) return;
     _enableInteractiveSelection = value;
@@ -134,6 +132,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// Whether the editor is currently focused.
   bool get hasFocus => _hasFocus;
   bool _hasFocus = false;
+
   set hasFocus(bool value) {
     assert(value != null);
     if (_hasFocus == value) {
@@ -147,6 +146,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// Should be obtained by querying MediaQuery for the devicePixelRatio.
   double get devicePixelRatio => _devicePixelRatio;
   double _devicePixelRatio;
+
   set devicePixelRatio(double value) {
     if (devicePixelRatio == value) return;
     _devicePixelRatio = value;
@@ -182,14 +182,17 @@ class RenderEditableTextLine extends RenderEditableBox {
 
   RenderBox? get leading => _leading;
   RenderBox? _leading;
+
   set leading(RenderBox? value) {
     _leading = _updateChild(_leading, value, TextLineSlot.leading);
   }
 
   RenderContentProxyBox? get body => _body;
   RenderContentProxyBox? _body;
+
   set body(RenderContentProxyBox? value) {
-    _body = _updateChild(_body, value, TextLineSlot.body) as RenderContentProxyBox?;
+    _body =
+        _updateChild(_body, value, TextLineSlot.body) as RenderContentProxyBox?;
   }
 
   RenderBox? _updateChild(
@@ -210,8 +213,8 @@ class RenderEditableTextLine extends RenderEditableBox {
   @override
   LineNode get node => _node;
   LineNode _node;
+
   set node(LineNode value) {
-    assert(value != null);
     if (_node == value) {
       return;
     }
@@ -226,6 +229,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// to a value that does not depend on the direction.
   TextDirection get textDirection => _textDirection;
   TextDirection _textDirection;
+
   set textDirection(TextDirection value) {
     if (_textDirection == value) {
       return;
@@ -382,8 +386,8 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// must not be null.
   EdgeInsetsGeometry get padding => _padding;
   EdgeInsetsGeometry _padding;
+
   set padding(EdgeInsetsGeometry value) {
-    assert(value != null);
     assert(value.isNonNegative);
     if (_padding == value) {
       return;
@@ -406,6 +410,7 @@ class RenderEditableTextLine extends RenderEditableBox {
     _resolvedPadding = null;
     markNeedsLayout();
   }
+
   // End padding implementation
 
   //
@@ -413,8 +418,8 @@ class RenderEditableTextLine extends RenderEditableBox {
   // Start cursor implementation
 
   CursorController _cursorController;
+
   set cursorController(CursorController value) {
-    assert(value != null);
     if (_cursorController == value) return;
     // TODO: unsubscribe from old controller updates
 //    if (attached) _showCursor.removeListener(_markNeedsPaintIfContainsCursor);
@@ -425,6 +430,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   }
 
   double get cursorWidth => _cursorController.style.width;
+
   double get cursorHeight =>
       _cursorController.style.height ??
       // hard code position to 0 here but it really doesn't matter since it's
@@ -436,6 +442,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// render object is detached from the render tree. This causes containsCursor
   /// to fail with an NPE when it's called from [detach].
   bool? _containsCursor;
+
   bool get containsCursor {
     return _containsCursor ??=
         selection.isCollapsed && node.containsOffset(selection.baseOffset);
@@ -455,7 +462,6 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// of the cursor for iOS is approximate and obtained through an eyeball
   /// comparison.
   void _computeCaretPrototype() {
-    assert(defaultTargetPlatform != null);
     switch (defaultTargetPlatform) {
       case TargetPlatform.iOS:
       case TargetPlatform.macOS:
@@ -613,7 +619,8 @@ class RenderEditableTextLine extends RenderEditableBox {
 
     body!.layout(innerConstraints, parentUsesSize: true);
     final bodyParentData = body!.parentData as BoxParentData;
-    bodyParentData.offset = Offset(_resolvedPadding!.left, _resolvedPadding!.top);
+    bodyParentData.offset =
+        Offset(_resolvedPadding!.left, _resolvedPadding!.top);
 
     if (leading != null) {
       final leadingConstraints = innerConstraints.copyWith(

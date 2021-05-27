@@ -8,7 +8,8 @@ import '../widgets/selection_utils.dart';
 import 'editable_box.dart';
 
 // TODO: Move contentPadding to RenderEditableContainerBox as having it here is a bit  messy.
-class RenderEditableTextBlock extends RenderEditableContainerBox implements RenderEditableBox {
+class RenderEditableTextBlock extends RenderEditableContainerBox
+    implements RenderEditableBox {
   ///
   RenderEditableTextBlock({
     List<RenderEditableBox>? children,
@@ -18,12 +19,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
     required Decoration decoration,
     ImageConfiguration configuration = ImageConfiguration.empty,
     EdgeInsets contentPadding = EdgeInsets.zero,
-  })  : assert(node != null),
-        assert(textDirection != null),
-        assert(decoration != null),
-        assert(padding != null),
-        assert(contentPadding != null),
-        _decoration = decoration,
+  })  : _decoration = decoration,
         _configuration = configuration,
         _savedPadding = padding,
         _contentPadding = contentPadding,
@@ -36,8 +32,8 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
 
   EdgeInsetsGeometry _savedPadding;
   EdgeInsets _contentPadding;
+
   set contentPadding(EdgeInsets value) {
-    assert(value != null);
     if (_contentPadding == value) return;
     _contentPadding = value;
     super.padding = _savedPadding.add(_contentPadding);
@@ -56,8 +52,8 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
   /// Commonly a [BoxDecoration].
   Decoration get decoration => _decoration;
   Decoration _decoration;
+
   set decoration(Decoration value) {
-    assert(value != null);
     if (value == _decoration) return;
     _painter?.dispose();
     _painter = null;
@@ -73,8 +69,8 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
   /// direction-sensitive [Decoration]s for painting and hit-testing.
   ImageConfiguration get configuration => _configuration;
   ImageConfiguration _configuration;
+
   set configuration(ImageConfiguration value) {
-    assert(value != null);
     if (value == _configuration) return;
     _configuration = value;
     markNeedsPaint();
@@ -138,7 +134,8 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
     assert(position.offset < node.length);
 
     final child = childAtPosition(position)!;
-    final childLocalPosition = TextPosition(offset: position.offset - child.node.offset);
+    final childLocalPosition =
+        TextPosition(offset: position.offset - child.node.offset);
     // ignore: omit_local_variable_types
     TextPosition? result = child.getPositionAbove(childLocalPosition);
     if (result != null) {
@@ -155,7 +152,8 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
     final testOffset = sibling.getOffsetForCaret(testPosition);
     final finalOffset = Offset(caretOffset.dx, testOffset.dy);
     final siblingLocalPosition = sibling.getPositionForOffset(finalOffset);
-    return TextPosition(offset: sibling.node.offset + siblingLocalPosition.offset);
+    return TextPosition(
+        offset: sibling.node.offset + siblingLocalPosition.offset);
   }
 
   @override
@@ -163,7 +161,8 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
     assert(position.offset < node.length);
 
     final child = childAtPosition(position)!;
-    final childLocalPosition = TextPosition(offset: position.offset - child.node.offset);
+    final childLocalPosition =
+        TextPosition(offset: position.offset - child.node.offset);
     // ignore: omit_local_variable_types
     TextPosition? result = child.getPositionBelow(childLocalPosition);
     if (result != null) {
@@ -180,13 +179,15 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
     final testOffset = sibling.getOffsetForCaret(testPosition);
     final finalOffset = Offset(caretOffset.dx, testOffset.dy);
     final siblingLocalPosition = sibling.getPositionForOffset(finalOffset);
-    return TextPosition(offset: sibling.node.offset + siblingLocalPosition.offset);
+    return TextPosition(
+        offset: sibling.node.offset + siblingLocalPosition.offset);
   }
 
   @override
   double preferredLineHeight(TextPosition position) {
     final child = childAtPosition(position)!;
-    final localPosition = TextPosition(offset: position.offset - child.node.offset);
+    final localPosition =
+        TextPosition(offset: position.offset - child.node.offset);
     return child.preferredLineHeight(localPosition);
   }
 
@@ -194,7 +195,8 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
   TextSelectionPoint getBaseEndpointForSelection(TextSelection selection) {
     if (selection.isCollapsed) {
       final localOffset = getOffsetForCaret(selection.extent);
-      final point = Offset(0.0, preferredLineHeight(selection.extent)) + localOffset;
+      final point =
+          Offset(0.0, preferredLineHeight(selection.extent)) + localOffset;
       return TextSelectionPoint(point, null);
     }
 
@@ -209,16 +211,19 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
     assert(baseChild != null);
 
     final BoxParentData baseParentData = baseChild!.parentData as BoxParentData;
-    final baseSelection = localSelection(baseChild.node, selection, fromParent: true);
+    final baseSelection =
+        localSelection(baseChild.node, selection, fromParent: true);
     var basePoint = baseChild.getBaseEndpointForSelection(baseSelection);
-    return TextSelectionPoint(basePoint.point + baseParentData.offset, basePoint.direction);
+    return TextSelectionPoint(
+        basePoint.point + baseParentData.offset, basePoint.direction);
   }
 
   @override
   TextSelectionPoint getExtentEndpointForSelection(TextSelection selection) {
     if (selection.isCollapsed) {
       final localOffset = getOffsetForCaret(selection.extent);
-      final point = Offset(0.0, preferredLineHeight(selection.extent)) + localOffset;
+      final point =
+          Offset(0.0, preferredLineHeight(selection.extent)) + localOffset;
       return TextSelectionPoint(point, null);
     }
 
@@ -233,10 +238,14 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
     }
     assert(extentChild != null);
 
-    final BoxParentData extentParentData = extentChild!.parentData as BoxParentData;
-    final extentSelection = localSelection(extentChild.node, selection, fromParent: true);
-    var extentPoint = extentChild.getExtentEndpointForSelection(extentSelection);
-    return TextSelectionPoint(extentPoint.point + extentParentData.offset, extentPoint.direction);
+    final BoxParentData extentParentData =
+        extentChild!.parentData as BoxParentData;
+    final extentSelection =
+        localSelection(extentChild.node, selection, fromParent: true);
+    var extentPoint =
+        extentChild.getExtentEndpointForSelection(extentSelection);
+    return TextSelectionPoint(
+        extentPoint.point + extentParentData.offset, extentPoint.direction);
   }
 
   // End RenderEditableBox implementation
@@ -261,8 +270,6 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
   }
 
   void _paintDecoration(PaintingContext context, Offset offset) {
-    assert(size.width != null);
-    assert(size.height != null);
     _painter ??= _decoration.createBoxPainter(markNeedsPaint);
 
     final decorationPadding = resolvedPadding! - _contentPadding;
@@ -277,17 +284,22 @@ class RenderEditableTextBlock extends RenderEditableContainerBox implements Rend
 
     // We want the decoration to align with the text so we adjust left padding
     // by cursorMargin.
-    final decorationOffset = offset.translate(decorationPadding.left, decorationPadding.top);
+    final decorationOffset =
+        offset.translate(decorationPadding.left, decorationPadding.top);
     _painter!.paint(context.canvas, decorationOffset, filledConfiguration);
     assert(() {
       if (debugSaveCount != context.canvas.getSaveCount()) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary('${_decoration.runtimeType} painter had mismatching save and restore calls.'),
-          ErrorDescription('Before painting the decoration, the canvas save count was $debugSaveCount. '
+          ErrorSummary(
+              '${_decoration.runtimeType} painter had mismatching save and restore calls.'),
+          ErrorDescription(
+              'Before painting the decoration, the canvas save count was $debugSaveCount. '
               'After painting it, the canvas save count was ${context.canvas.getSaveCount()}. '
               'Every call to save() or saveLayer() must be matched by a call to restore().'),
-          DiagnosticsProperty<Decoration>('The decoration was', decoration, style: DiagnosticsTreeStyle.errorProperty),
-          DiagnosticsProperty<BoxPainter>('The painter was', _painter, style: DiagnosticsTreeStyle.errorProperty),
+          DiagnosticsProperty<Decoration>('The decoration was', decoration,
+              style: DiagnosticsTreeStyle.errorProperty),
+          DiagnosticsProperty<BoxPainter>('The painter was', _painter,
+              style: DiagnosticsTreeStyle.errorProperty),
         ]);
       }
       return true;

@@ -149,10 +149,7 @@ class RenderEditableContainerBox extends RenderBox
     required ContainerNode node,
     required TextDirection textDirection,
     required EdgeInsetsGeometry padding,
-  })  : assert(node != null),
-        assert(textDirection != null),
-        assert(padding != null),
-        assert(padding.isNonNegative),
+  })  : assert(padding.isNonNegative),
         _node = node,
         _textDirection = textDirection,
         _padding = padding {
@@ -163,7 +160,6 @@ class RenderEditableContainerBox extends RenderBox
   ContainerNode _node;
 
   set node(ContainerNode value) {
-    assert(value != null);
     if (_node == value) return;
     _node = value;
     markNeedsLayout();
@@ -189,7 +185,6 @@ class RenderEditableContainerBox extends RenderBox
   EdgeInsetsGeometry _padding;
 
   set padding(EdgeInsetsGeometry value) {
-    assert(value != null);
     assert(value.isNonNegative);
     if (_padding == value) {
       return;

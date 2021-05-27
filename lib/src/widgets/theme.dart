@@ -21,9 +21,7 @@ class ZefyrTheme extends InheritedWidget {
     Key? key,
     required this.data,
     required Widget child,
-  })  : assert(data != null),
-        assert(child != null),
-        super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(ZefyrTheme oldWidget) {
@@ -39,7 +37,8 @@ class ZefyrTheme extends InheritedWidget {
   static ZefyrThemeData? of(BuildContext context, {bool nullOk = false}) {
     final widget = context.dependOnInheritedWidgetOfExactType<ZefyrTheme>();
     if (widget == null && nullOk) return null;
-    assert(widget != null, '$ZefyrTheme.of() called with a context that does not contain a ZefyrEditor.');
+    assert(widget != null,
+        '$ZefyrTheme.of() called with a context that does not contain a ZefyrEditor.');
     return widget!.data;
   }
 }
@@ -50,6 +49,7 @@ class VerticalSpacing {
   final double? bottom;
 
   const VerticalSpacing({this.top = 0.0, this.bottom = 0.0});
+
   const VerticalSpacing.zero()
       : top = 0.0,
         bottom = 0.0;

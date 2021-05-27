@@ -12,11 +12,13 @@ import 'editable_box.dart';
 /// (including the cursor location).
 ///
 /// Used by [RenderEditor.onSelectionChanged].
-typedef TextSelectionChangedHandler = void Function(TextSelection selection, SelectionChangedCause cause);
+typedef TextSelectionChangedHandler = void Function(
+    TextSelection selection, SelectionChangedCause cause);
 
 /// Base interface for editable render objects.
 abstract class RenderAbstractEditor {
   TextSelection selectWordAtPosition(TextPosition position);
+
   TextSelection selectLineAtPosition(TextPosition position);
 
   /// Returns preferred line height at specified `position` in text.
@@ -87,7 +89,8 @@ abstract class RenderAbstractEditor {
 /// and blocks).
 ///
 /// Children of [RenderEditor] must be instances of [RenderEditableBox].
-class RenderEditor extends RenderEditableContainerBox implements RenderAbstractEditor {
+class RenderEditor extends RenderEditableContainerBox
+    implements RenderAbstractEditor {
   RenderEditor({
     List<RenderEditableBox>? children,
     required NotusDocument document,
@@ -98,7 +101,8 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
     required LayerLink endHandleLayerLink,
     required EdgeInsetsGeometry padding,
     TextSelectionChangedHandler? onSelectionChanged,
-    EdgeInsets floatingCursorAddedMargin = const EdgeInsets.fromLTRB(4, 4, 4, 5),
+    EdgeInsets floatingCursorAddedMargin =
+        const EdgeInsets.fromLTRB(4, 4, 4, 5),
   })  : _document = document,
         _hasFocus = hasFocus,
         _selection = selection,
@@ -113,8 +117,8 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
         );
 
   NotusDocument _document;
+
   set document(NotusDocument value) {
-    assert(value != null);
     if (_document == value) {
       return;
     }
@@ -125,6 +129,7 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
   /// Whether the editor is currently focused.
   bool get hasFocus => _hasFocus;
   bool _hasFocus = false;
+
   set hasFocus(bool value) {
     if (_hasFocus == value) {
       return;
@@ -141,6 +146,7 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
   /// manipulate the selection will throw.
   TextSelection get selection => _selection;
   TextSelection _selection;
+
   set selection(TextSelection value) {
     if (_selection == value) return;
     _selection = value;
@@ -153,6 +159,7 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
   /// [LayerLink], which will be used as [CompositedTransformTarget] of start handle.
   LayerLink get startHandleLayerLink => _startHandleLayerLink;
   LayerLink _startHandleLayerLink;
+
   set startHandleLayerLink(LayerLink value) {
     if (_startHandleLayerLink == value) return;
     _startHandleLayerLink = value;
@@ -165,6 +172,7 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
   /// [LayerLink], which will be used as [CompositedTransformTarget] of end handle.
   LayerLink get endHandleLayerLink => _endHandleLayerLink;
   LayerLink _endHandleLayerLink;
+
   set endHandleLayerLink(LayerLink value) {
     if (_endHandleLayerLink == value) return;
     _endHandleLayerLink = value;
@@ -181,9 +189,12 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
   /// This bool indicates whether the text is scrolled so that the handle is
   /// inside the text field viewport, as opposed to whether it is actually
   /// visible on the screen.
-  ValueListenable<bool> get selectionStartInViewport => _selectionStartInViewport;
+  ValueListenable<bool> get selectionStartInViewport =>
+      _selectionStartInViewport;
+
   // TODO: implement selectionStartInViewport
-  final ValueNotifier<bool> _selectionStartInViewport = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> _selectionStartInViewport =
+      ValueNotifier<bool>(true);
 
   /// Track whether position of the end of the selected text is within the viewport.
   ///
@@ -211,7 +222,8 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
   /// this editor from above it.
   ///
   /// Returns `null` if the cursor is currently visible.
-  double? getOffsetToRevealCursor(double viewportHeight, double scrollOffset, double offsetInViewport) {
+  double? getOffsetToRevealCursor(
+      double viewportHeight, double scrollOffset, double offsetInViewport) {
     const kMargin = 8.0;
     // Endpoints coordinates represents lower left or lower right corner of
     // the selection. If we want to scroll up to reveal the caret we need to
@@ -226,8 +238,12 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
     // if (endpoints.length == 1) {
     // Collapsed selection => caret
     final child = childAtPosition(selection.extent)!;
-    final childPosition = TextPosition(offset: selection.extentOffset - child.node.offset);
-    final caretTop = targetEndpoint.point.dy - child.preferredLineHeight(childPosition) - kMargin + offsetInViewport;
+    final childPosition =
+        TextPosition(offset: selection.extentOffset - child.node.offset);
+    final caretTop = targetEndpoint.point.dy -
+        child.preferredLineHeight(childPosition) -
+        kMargin +
+        offsetInViewport;
     final caretBottom = targetEndpoint.point.dy + kMargin + offsetInViewport;
     double? dy;
     if (caretTop < scrollOffset) {
@@ -245,15 +261,17 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
 
   @override
   List<TextSelectionPoint> getEndpointsForSelection(TextSelection selection) {
-    assert(constraints != null);
     // _layoutText(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
 
     if (selection.isCollapsed) {
       final child = childAtPosition(selection.extent)!;
-      final localPosition = TextPosition(offset: selection.extentOffset - child.node.offset);
+      final localPosition =
+          TextPosition(offset: selection.extentOffset - child.node.offset);
       final localOffset = child.getOffsetForCaret(localPosition);
       final BoxParentData parentData = child.parentData as BoxParentData;
-      final start = Offset(0.0, child.preferredLineHeight(localPosition)) + localOffset + parentData.offset;
+      final start = Offset(0.0, child.preferredLineHeight(localPosition)) +
+          localOffset +
+          parentData.offset;
       return <TextSelectionPoint>[TextSelectionPoint(start, null)];
     } else {
       final baseNode = node.lookup(selection.start).node;
@@ -267,10 +285,13 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
       }
       assert(baseChild != null);
 
-      final BoxParentData baseParentData = baseChild!.parentData as BoxParentData;
-      final baseSelection = localSelection(baseChild.node, selection, fromParent: true);
+      final BoxParentData baseParentData =
+          baseChild!.parentData as BoxParentData;
+      final baseSelection =
+          localSelection(baseChild.node, selection, fromParent: true);
       var basePoint = baseChild.getBaseEndpointForSelection(baseSelection);
-      basePoint = TextSelectionPoint(basePoint.point + baseParentData.offset, basePoint.direction);
+      basePoint = TextSelectionPoint(
+          basePoint.point + baseParentData.offset, basePoint.direction);
 
       final extentNode = node.lookup(selection.end).node;
       RenderEditableBox? extentChild = baseChild;
@@ -282,10 +303,14 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
       }
       assert(extentChild != null);
 
-      final BoxParentData extentParentData = extentChild!.parentData as BoxParentData;
-      final extentSelection = localSelection(extentChild.node, selection, fromParent: true);
-      var extentPoint = extentChild.getExtentEndpointForSelection(extentSelection);
-      extentPoint = TextSelectionPoint(extentPoint.point + extentParentData.offset, extentPoint.direction);
+      final BoxParentData extentParentData =
+          extentChild!.parentData as BoxParentData;
+      final extentSelection =
+          localSelection(extentChild.node, selection, fromParent: true);
+      var extentPoint =
+          extentChild.getExtentEndpointForSelection(extentSelection);
+      extentPoint = TextSelectionPoint(
+          extentPoint.point + extentParentData.offset, extentPoint.direction);
 
       return <TextSelectionPoint>[basePoint, extentPoint];
     }
@@ -309,15 +334,14 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
     Offset? to,
     required SelectionChangedCause cause,
   }) {
-    assert(cause != null);
-    assert(from != null);
     // _layoutText(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
     if (onSelectionChanged == null) {
       return;
     }
     final firstPosition = getPositionForOffset(from);
     final firstWord = selectWordAtPosition(firstPosition);
-    final lastWord = to == null ? firstWord : selectWordAtPosition(getPositionForOffset(to));
+    final lastWord =
+        to == null ? firstWord : selectWordAtPosition(getPositionForOffset(to));
 
     _handleSelectionChange(
       TextSelection(
@@ -331,7 +355,6 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
 
   @override
   void selectWordEdge({required SelectionChangedCause cause}) {
-    assert(cause != null);
     // _layoutText(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
     assert(_lastTapDownPosition != null);
     if (onSelectionChanged == null) {
@@ -351,12 +374,14 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
     );
     if (position.offset - word.start <= 1) {
       _handleSelectionChange(
-        TextSelection.collapsed(offset: word.start, affinity: TextAffinity.downstream),
+        TextSelection.collapsed(
+            offset: word.start, affinity: TextAffinity.downstream),
         cause,
       );
     } else {
       _handleSelectionChange(
-        TextSelection.collapsed(offset: word.end, affinity: TextAffinity.upstream),
+        TextSelection.collapsed(
+            offset: word.end, affinity: TextAffinity.upstream),
         cause,
       );
     }
@@ -368,8 +393,6 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
     Offset? to,
     required SelectionChangedCause cause,
   }) {
-    assert(cause != null);
-    assert(from != null);
     // _layoutText(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
     if (onSelectionChanged == null) {
       return;
@@ -411,7 +434,8 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
 //    'Last width ($_textLayoutLastMinWidth, $_textLayoutLastMaxWidth) not the same as max width constraint (${constraints.minWidth}, ${constraints.maxWidth}).');
     final child = childAtPosition(position)!;
     final nodeOffset = child.node.offset;
-    final localPosition = TextPosition(offset: position.offset - nodeOffset, affinity: position.affinity);
+    final localPosition = TextPosition(
+        offset: position.offset - nodeOffset, affinity: position.affinity);
     final localWord = child.getWordBoundary(localPosition);
     final word = TextRange(
       start: localWord.start + nodeOffset,
@@ -432,7 +456,8 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
 //    'Last width ($_textLayoutLastMinWidth, $_textLayoutLastMaxWidth) not the same as max width constraint (${constraints.minWidth}, ${constraints.maxWidth}).');
     final child = childAtPosition(position)!;
     final nodeOffset = child.node.offset;
-    final localPosition = TextPosition(offset: position.offset - nodeOffset, affinity: position.affinity);
+    final localPosition = TextPosition(
+        offset: position.offset - nodeOffset, affinity: position.affinity);
     final localLineRange = child.getLineBoundary(localPosition);
     final line = TextRange(
       start: localLineRange.start + nodeOffset,
@@ -455,8 +480,12 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
     // components, so always send those events, even if we didn't think it
     // changed. Also, focusing an empty field is sent as a selection change even
     // if the selection offset didn't change.
-    final focusingEmpty = nextSelection.baseOffset == 0 && nextSelection.extentOffset == 0 && !hasFocus;
-    if (nextSelection == selection && cause != SelectionChangedCause.keyboard && !focusingEmpty) {
+    final focusingEmpty = nextSelection.baseOffset == 0 &&
+        nextSelection.extentOffset == 0 &&
+        !hasFocus;
+    if (nextSelection == selection &&
+        cause != SelectionChangedCause.keyboard &&
+        !focusingEmpty) {
       return;
     }
     if (onSelectionChanged != null) {
@@ -493,7 +522,8 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
     return defaultHitTestChildren(result, position: position);
   }
 
-  void _paintHandleLayers(PaintingContext context, List<TextSelectionPoint> endpoints) {
+  void _paintHandleLayers(
+      PaintingContext context, List<TextSelectionPoint> endpoints) {
     var startPoint = endpoints[0].point;
     startPoint = Offset(
       startPoint.dx.clamp(0.0, size.width),
@@ -521,7 +551,8 @@ class RenderEditor extends RenderEditableContainerBox implements RenderAbstractE
   @override
   double preferredLineHeight(TextPosition position) {
     final child = childAtPosition(position)!;
-    final localPosition = TextPosition(offset: position.offset - child.node.offset);
+    final localPosition =
+        TextPosition(offset: position.offset - child.node.offset);
     return child.preferredLineHeight(localPosition);
   }
 
