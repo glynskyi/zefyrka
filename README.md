@@ -10,14 +10,34 @@ Zefyrka is a fork of Zefyr package with the following improvements:
     * paragraph alignment
     * paragraph indentation
 
-If you have a feature
-request or found a bug, please file it at the [issue tracker][].
-
-[issue tracker]: https://github.com/glynskyi/zefyrka/issues
-
 For documentation see [https://github.com/gkynskyi/zefyrka](https://github.com/glynskyi/zefyrka).
 
 ![zefyrka screenshot](https://github.com/glynskyi/zefyrka/raw/main/assets/zefyr-1.png)
+
+## Usage
+
+See the `example` directory for a minimal example of how to use Zefyrka. You typically just need to instantiate a controller:
+
+```
+ZefyrController _controller = ZefyrController();
+```
+
+and then embed the toolbar and the editor, within your app.  For example:
+
+```dart
+Column(
+  children: [
+    ZefyrToolbar.basic(controller: _controller),
+    Expanded(
+      child: ZefyrEditor(
+        controller: _controller,
+      ),
+    ),
+  ],
+)
+```
+
+Check out [Sample Page] for advanced usage.
 
 ## Installation
 
@@ -36,3 +56,5 @@ And run `flutter packages get`.
 
 Continue to [https://github.com/glynskyi/zefyrka/blob/main/doc/quick-start.md](documentation) to
 learn more about Zefyrka and how to use it in your projects.
+
+[Sample Page]: https://github.com/glynskyi/zefyrka/blob/master/example/lib/src/home.dart
