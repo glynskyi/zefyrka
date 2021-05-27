@@ -182,6 +182,13 @@ class ZefyrEditor extends StatefulWidget {
   /// See [Scrollable.physics].
   final ScrollPhysics? scrollPhysics;
 
+  /// Whether to show selection handles.
+  ///
+  /// When a selection is active, there will be two handles at each side of
+  /// boundary, or one handle if the selection is collapsed. The handles can be
+  /// dragged to adjust the selection.
+  final bool? showSelectionHandles;
+
   /// Callback to invoke when user wants to launch a URL.
   final ValueChanged<String>? onLaunchUrl;
 
@@ -209,6 +216,7 @@ class ZefyrEditor extends StatefulWidget {
     this.textCapitalization = TextCapitalization.sentences,
     this.keyboardAppearance = Brightness.light,
     this.scrollPhysics,
+    this.showSelectionHandles,
     this.onLaunchUrl,
     this.embedBuilder = defaultZefyrEmbedBuilder,
   }) : super(key: key);
@@ -263,7 +271,8 @@ class _ZefyrEditorState extends State<ZefyrEditor>
     late Color selectionColor;
     Radius? cursorRadius;
 
-    final showSelectionHandles = _mobilePlatforms.contains(theme.platform);
+    final showSelectionHandles = widget.showSelectionHandles ??
+        _mobilePlatforms.contains(theme.platform);
 
     switch (theme.platform) {
       case TargetPlatform.iOS:
