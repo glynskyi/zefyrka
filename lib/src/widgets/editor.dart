@@ -1085,7 +1085,6 @@ class RawEditorState extends EditorState
 //            onPaste: _semanticsOnPaste(controls),
         child: _Editor(
           key: _editorKey,
-          children: _buildChildren(context),
           document: widget.controller.document,
           selection: widget.controller.selection,
           hasFocus: _hasFocus,
@@ -1094,6 +1093,7 @@ class RawEditorState extends EditorState
           endHandleLayerLink: _endHandleLayerLink,
           onSelectionChanged: _handleSelectionChanged,
           padding: widget.padding,
+          children: _buildChildren(context),
         ),
       ),
     );

@@ -277,9 +277,9 @@ class _NumberPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: AlignmentDirectional.topEnd,
-      child: Text(withDot ? '$index.' : '$index', style: style),
       width: width,
       padding: EdgeInsetsDirectional.only(end: padding),
+      child: Text(withDot ? '$index.' : '$index', style: style),
     );
   }
 }
@@ -298,9 +298,9 @@ class _BulletPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: AlignmentDirectional.topEnd,
-      child: Text('•', style: style),
       width: width,
       padding: EdgeInsetsDirectional.only(end: 13.0),
+      child: Text('•', style: style),
     );
   }
 }
@@ -323,6 +323,8 @@ class _CheckboxPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: AlignmentDirectional.topEnd,
+      width: width,
+      padding: EdgeInsetsDirectional.only(end: 13.0, top: 2),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Listener(
@@ -336,8 +338,6 @@ class _CheckboxPoint extends StatelessWidget {
           ),
         ),
       ),
-      width: width,
-      padding: EdgeInsetsDirectional.only(end: 13.0, top: 2),
     );
   }
 }

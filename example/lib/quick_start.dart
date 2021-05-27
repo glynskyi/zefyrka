@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Quick Start')),
       body: Center(
-        child: FlatButton(
+        child: TextButton(
           child: Text('Open editor'),
           onPressed: () => navigator.pushNamed('/editor'),
         ),

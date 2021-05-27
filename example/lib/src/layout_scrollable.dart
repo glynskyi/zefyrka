@@ -58,14 +58,10 @@ class _ScrollableLayoutState extends State<ScrollableLayout> {
               ),
               title: Text('Everything looks good?'),
               subtitle: Text('If yes then just hit the Submit button'),
-              trailing: FlatButton(
-                color: Theme.of(context).accentColor,
+              trailing: TextButton(
                 onPressed: () =>
                     showDialog(context: context, builder: _buildThanks),
-                child: Text(
-                  'Submit',
-                  style: Theme.of(context).accentTextTheme.button,
-                ),
+                child: Text('Submit'),
               ),
             ),
           ],
@@ -79,7 +75,7 @@ class _ScrollableLayoutState extends State<ScrollableLayout> {
       title: Text('Thanks'),
       content: Text('This is a demo so nothing really happens.'),
       actions: [
-        FlatButton(
+        TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text('Close'),
         )

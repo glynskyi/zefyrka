@@ -1208,8 +1208,7 @@ class _EditorTextSelectionGestureDetectorState
         widget.onSingleLongTapEnd != null) {
       gestures[LongPressGestureRecognizer] =
           GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
-        () => LongPressGestureRecognizer(
-            debugOwner: this, kind: PointerDeviceKind.touch),
+        () => LongPressGestureRecognizer(debugOwner: this),
         (LongPressGestureRecognizer instance) {
           instance
             ..onLongPressStart = _handleLongPressStart
@@ -1226,8 +1225,7 @@ class _EditorTextSelectionGestureDetectorState
       // https://github.com/flutter/flutter/issues/28676
       gestures[HorizontalDragGestureRecognizer] =
           GestureRecognizerFactoryWithHandlers<HorizontalDragGestureRecognizer>(
-        () => HorizontalDragGestureRecognizer(
-            debugOwner: this, kind: PointerDeviceKind.mouse),
+        () => HorizontalDragGestureRecognizer(debugOwner: this),
         (HorizontalDragGestureRecognizer instance) {
           instance
             // Text selection should start from the position of the first pointer
