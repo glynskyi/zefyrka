@@ -134,7 +134,6 @@ class RenderEditableTextLine extends RenderEditableBox {
   bool _hasFocus = false;
 
   set hasFocus(bool value) {
-    assert(value != null);
     if (_hasFocus == value) {
       return;
     }

@@ -44,7 +44,7 @@ class EditableTextBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
 
-    final theme = ZefyrTheme.of(context);
+    final theme = ZefyrTheme.of(context)!;
     return _EditableBlock(
       node: node,
       textDirection: textDirection,
@@ -86,8 +86,7 @@ class EditableTextBlock extends StatelessWidget {
   }
 
   TextAlign _buildParagraphAlignment(LineNode node) {
-    final alignment =
-        node.style.get(NotusAttribute.alignment as NotusAttributeKey<String>);
+    final alignment = node.style.get(NotusAttribute.alignment);
     if (alignment == NotusAttribute.alignment.end) {
       return TextAlign.end;
     } else if (alignment == NotusAttribute.alignment.justify) {
@@ -102,8 +101,7 @@ class EditableTextBlock extends StatelessWidget {
   Widget? _buildLeading(
       BuildContext context, LineNode node, int index, int count) {
     final theme = ZefyrTheme.of(context);
-    final block =
-        node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+    final block = node.style.get(NotusAttribute.block);
     if (block == NotusAttribute.block.numberList) {
       return _NumberPoint(
         index: index,
@@ -141,13 +139,11 @@ class EditableTextBlock extends StatelessWidget {
 
   double _getIndentWidth(LineNode line) {
     int additionalIndent = 0;
-    final indent =
-        line.style.get(NotusAttribute.indent as NotusAttributeKey<int>);
+    final indent = line.style.get(NotusAttribute.indent);
     if (indent != null) {
       additionalIndent = indent.value!;
     }
-    final block =
-        node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+    final block = node.style.get(NotusAttribute.block);
     if (block == NotusAttribute.block.quote) {
       return 16.0 + additionalIndent;
     } else if (block == NotusAttribute.block.code) {
@@ -159,8 +155,7 @@ class EditableTextBlock extends StatelessWidget {
 
   VerticalSpacing _getSpacingForLine(
       LineNode node, int index, int count, ZefyrThemeData? theme) {
-    final heading =
-        node.style.get(NotusAttribute.heading as NotusAttributeKey<int>);
+    final heading = node.style.get(NotusAttribute.heading);
 
     double? top = 0.0;
     double? bottom = 0.0;
@@ -175,10 +170,7 @@ class EditableTextBlock extends StatelessWidget {
       top = theme!.heading3.spacing.top;
       bottom = theme.heading3.spacing.bottom;
     } else {
-      final block = this
-          .node
-          .style
-          .get(NotusAttribute.block as NotusAttributeKey<String>);
+      final block = this.node.style.get(NotusAttribute.block);
       late var lineSpacing;
       if (block == NotusAttribute.block.quote) {
         lineSpacing = theme!.quote.lineSpacing;
@@ -208,13 +200,12 @@ class EditableTextBlock extends StatelessWidget {
     return VerticalSpacing(top: top, bottom: bottom);
   }
 
-  BoxDecoration? _getDecorationForBlock(BlockNode node, ZefyrThemeData? theme) {
-    final style =
-        node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+  BoxDecoration? _getDecorationForBlock(BlockNode node, ZefyrThemeData theme) {
+    final style = node.style.get(NotusAttribute.block);
     if (style == NotusAttribute.block.quote) {
-      return theme!.quote.decoration;
+      return theme.quote.decoration;
     } else if (style == NotusAttribute.block.code) {
-      return theme!.code.decoration;
+      return theme.code.decoration;
     }
     return null;
   }

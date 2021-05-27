@@ -55,7 +55,9 @@ class TextLine extends StatelessWidget {
 
   TextSpan buildText(BuildContext context, LineNode node) {
     final theme = ZefyrTheme.of(context);
-    final children = node.children.map((node) => _segmentToTextSpan(node, theme)).toList(growable: false);
+    final children = node.children
+        .map((node) => _segmentToTextSpan(node, theme))
+        .toList(growable: false);
     return TextSpan(
       style: _getParagraphTextStyle(node.style, theme),
       children: children,
@@ -74,7 +76,7 @@ class TextLine extends StatelessWidget {
 
   TextStyle _getParagraphTextStyle(NotusStyle style, ZefyrThemeData? theme) {
     var textStyle = TextStyle();
-    final heading = node.style.get(NotusAttribute.heading as NotusAttributeKey<int>);
+    final heading = node.style.get(NotusAttribute.heading);
     if (heading == NotusAttribute.heading.level1) {
       textStyle = textStyle.merge(theme!.heading1.style);
     } else if (heading == NotusAttribute.heading.level2) {
@@ -85,7 +87,7 @@ class TextLine extends StatelessWidget {
       textStyle = textStyle.merge(theme!.paragraph.style);
     }
 
-    final block = style.get(NotusAttribute.block as NotusAttributeKey<String>);
+    final block = style.get(NotusAttribute.block);
     if (block == NotusAttribute.block.quote) {
       textStyle = textStyle.merge(theme.quote.style);
     } else if (block == NotusAttribute.block.code) {
@@ -99,7 +101,7 @@ class TextLine extends StatelessWidget {
   }
 
   TextAlign _getParagraphTextAlign(NotusStyle style) {
-    final alignment = style.get(NotusAttribute.alignment as NotusAttributeKey<String>);
+    final alignment = style.get(NotusAttribute.alignment);
     if (alignment == NotusAttribute.alignment.end) {
       return TextAlign.end;
     } else if (alignment == NotusAttribute.alignment.justify) {
@@ -123,16 +125,21 @@ class TextLine extends StatelessWidget {
       result = _mergeTextStyleWithDecoration(result, theme!.link);
     }
     if (style.contains(NotusAttribute.fontSize)) {
-      result = result.merge(TextStyle(fontSize: style.get(NotusAttribute.fontSize)!.value!.toDouble()));
+      result = result.merge(TextStyle(
+          fontSize: style.get(NotusAttribute.fontSize)!.value!.toDouble()));
     }
     if (style.contains(NotusAttribute.fontFamily)) {
-      result = result.merge(TextStyle(fontFamily: style.get(NotusAttribute.fontFamily)!.value));
+      result = result.merge(
+          TextStyle(fontFamily: style.get(NotusAttribute.fontFamily)!.value));
     }
     if (style.contains(NotusAttribute.color)) {
-      result = result.merge(TextStyle(color: Color(style.get(NotusAttribute.color)!.value!)));
+      result = result.merge(
+          TextStyle(color: Color(style.get(NotusAttribute.color)!.value!)));
     }
     if (style.contains(NotusAttribute.backgroundColor)) {
-      result = result.merge(TextStyle(backgroundColor: Color(style.get(NotusAttribute.backgroundColor)!.value!)));
+      result = result.merge(TextStyle(
+          backgroundColor:
+              Color(style.get(NotusAttribute.backgroundColor)!.value!)));
     }
     if (style.contains(NotusAttribute.underline)) {
       result = _mergeTextStyleWithDecoration(result, theme!.underline);

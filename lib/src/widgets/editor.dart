@@ -1164,8 +1164,7 @@ class RawEditorState extends EditorState
           devicePixelRatio: MediaQuery.of(context).devicePixelRatio,
         ));
       } else if (node is BlockNode) {
-        final block =
-            node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+        final block = node.style.get(NotusAttribute.block);
         result.add(EditableTextBlock(
           node: node,
           textDirection: _textDirection,
@@ -1198,8 +1197,7 @@ class RawEditorState extends EditorState
   }
 
   TextAlign _buildParagraphAlignment(LineNode node) {
-    final alignment =
-        node.style.get(NotusAttribute.alignment as NotusAttributeKey<String>);
+    final alignment = node.style.get(NotusAttribute.alignment);
     if (alignment == NotusAttribute.alignment.end) {
       return TextAlign.end;
     } else if (alignment == NotusAttribute.alignment.justify) {
@@ -1212,8 +1210,7 @@ class RawEditorState extends EditorState
   }
 
   double _getIndentWidth(LineNode line) {
-    final indent =
-        line.style.get(NotusAttribute.indent as NotusAttributeKey<int>);
+    final indent = line.style.get(NotusAttribute.indent);
     if (indent != null) {
       return indent.value!.toDouble();
     } else {
@@ -1222,8 +1219,7 @@ class RawEditorState extends EditorState
   }
 
   VerticalSpacing _getSpacingForLine(LineNode node, ZefyrThemeData? theme) {
-    final style =
-        node.style.get(NotusAttribute.heading as NotusAttributeKey<int>);
+    final style = node.style.get(NotusAttribute.heading);
     if (style == NotusAttribute.heading.level1) {
       return theme!.heading1.spacing;
     } else if (style == NotusAttribute.heading.level2) {
@@ -1236,8 +1232,7 @@ class RawEditorState extends EditorState
   }
 
   VerticalSpacing _getSpacingForBlock(BlockNode node, ZefyrThemeData? theme) {
-    final style =
-        node.style.get(NotusAttribute.block as NotusAttributeKey<String>);
+    final style = node.style.get(NotusAttribute.block);
     if (style == NotusAttribute.block.code) {
       return theme!.code.spacing;
     } else if (style == NotusAttribute.block.quote) {

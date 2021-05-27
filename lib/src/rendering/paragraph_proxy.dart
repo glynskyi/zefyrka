@@ -48,7 +48,6 @@ class RenderParagraphProxy extends RenderProxyBox
   }
 
   set textScaleFactor(double value) {
-    assert(value != null);
     if (_prototypePainter.textScaleFactor == value) return;
     _prototypePainter.textScaleFactor = value;
     markNeedsLayout();
