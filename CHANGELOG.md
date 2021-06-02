@@ -1,3 +1,7 @@
+## 1.0.3
+
+* removes `meta` package from dependencies
+
 ## 1.0.2
 
 * fixes warnings left after the null safety migration

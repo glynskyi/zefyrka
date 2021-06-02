@@ -13,7 +13,6 @@ dependencies:
   url_launcher: ^6.0.4
   quill_format: ^1.0.0
   notus_format: ^1.0.1
-  meta: ^1.4.0
   quiver_hashcode: ^3.0.0+1
   characters: ^1.1.0
 
