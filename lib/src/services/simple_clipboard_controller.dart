@@ -7,7 +7,8 @@ class SimpleClipboardController implements ClipboardController {
   void copy(ZefyrController controller, String plainText) async {
     if (!controller.selection.isCollapsed) {
       // ignore: unawaited_futures
-      Clipboard.setData(ClipboardData(text: controller.selection.textInside(plainText)));
+      Clipboard.setData(
+          ClipboardData(text: controller.selection.textInside(plainText)));
     }
   }
 
@@ -26,14 +27,16 @@ class SimpleClipboardController implements ClipboardController {
       );
 
       return TextEditingValue(
-        text: controller.selection.textBefore(plainText) + controller.selection.textAfter(plainText),
+        text: controller.selection.textBefore(plainText) +
+            controller.selection.textAfter(plainText),
         selection: TextSelection.collapsed(offset: controller.selection.start),
       );
     }
   }
 
   @override
-  Future<void> paste(ZefyrController controller, TextEditingValue textEditingValue) async {
+  Future<void> paste(
+      ZefyrController controller, TextEditingValue textEditingValue) async {
     final data = await Clipboard.getData(Clipboard.kTextPlain);
     if (data != null) {
       final length = controller.selection.end - controller.selection.start;
@@ -41,7 +44,8 @@ class SimpleClipboardController implements ClipboardController {
         controller.selection.start,
         length,
         data.text,
-        selection: TextSelection.collapsed(offset: controller.selection.start + data.text!.length),
+        selection: TextSelection.collapsed(
+            offset: controller.selection.start + data.text!.length),
       );
     }
   }

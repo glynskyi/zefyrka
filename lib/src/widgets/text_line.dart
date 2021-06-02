@@ -65,7 +65,7 @@ class TextLine extends StatelessWidget {
   }
 
   TextSpan _segmentToTextSpan(Node node, ZefyrThemeData? theme) {
-    final TextNode segment = node as TextNode;
+    final segment = node as TextNode;
     final attrs = segment.style;
 
     return TextSpan(

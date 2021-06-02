@@ -246,7 +246,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// The [position] parameter is expected to be relative to the [node] content.
   @override
   Offset getOffsetForCaret(TextPosition position) {
-    final BoxParentData parentData = body!.parentData as BoxParentData;
+    final parentData = body!.parentData as BoxParentData;
     return body!.getOffsetForCaret(position, _caretPrototype) +
         parentData.offset;
   }
@@ -255,7 +255,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   /// object.
   @override
   TextPosition getPositionForOffset(Offset offset) {
-    final BoxParentData parentData = body!.parentData as BoxParentData;
+    final parentData = body!.parentData as BoxParentData;
     final shiftedOffset = offset - parentData.offset;
     return body!.getPositionForOffset(shiftedOffset);
   }
@@ -348,11 +348,11 @@ class RenderEditableTextLine extends RenderEditableBox {
   }
 
   List<TextBox> getBoxesForSelection(TextSelection selection) {
-    final BoxParentData? parentData = body!.parentData as BoxParentData?;
+    final parentData = body!.parentData as BoxParentData;
     final boxes = body!.getBoxesForSelection(selection);
     return boxes.map((box) {
       return TextBox.fromLTRBD(
-        box.left + parentData!.offset.dx,
+        box.left + parentData.offset.dx,
         box.top + parentData.offset.dy,
         box.right + parentData.offset.dx,
         box.bottom + parentData.offset.dy,

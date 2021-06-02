@@ -97,7 +97,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
       offset: position.offset - child.node.offset,
       affinity: position.affinity,
     );
-    final BoxParentData parentData = child.parentData as BoxParentData;
+    final parentData = child.parentData as BoxParentData;
     return child.getOffsetForCaret(localPosition) + parentData.offset;
   }
 
@@ -107,7 +107,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
   @override
   TextPosition getPositionForOffset(Offset offset) {
     final child = childAtOffset(offset)!;
-    final BoxParentData parentData = child.parentData as BoxParentData;
+    final parentData = child.parentData as BoxParentData;
     final localOffset = offset - parentData.offset;
     final localPosition = child.getPositionForOffset(localOffset);
     return TextPosition(
@@ -210,7 +210,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
     }
     assert(baseChild != null);
 
-    final BoxParentData baseParentData = baseChild!.parentData as BoxParentData;
+    final baseParentData = baseChild!.parentData as BoxParentData;
     final baseSelection =
         localSelection(baseChild.node, selection, fromParent: true);
     var basePoint = baseChild.getBaseEndpointForSelection(baseSelection);
@@ -238,8 +238,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
     }
     assert(extentChild != null);
 
-    final BoxParentData extentParentData =
-        extentChild!.parentData as BoxParentData;
+    final extentParentData = extentChild!.parentData as BoxParentData;
     final extentSelection =
         localSelection(extentChild.node, selection, fromParent: true);
     var extentPoint =
