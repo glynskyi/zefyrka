@@ -1,3 +1,7 @@
+## 1.0.4
+
+* fixes the copy/paste actions on mobile platforms (#10)
+
 ## 1.0.3
 
 * removes `meta` package from dependencies
