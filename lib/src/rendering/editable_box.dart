@@ -220,8 +220,7 @@ class RenderEditableContainerBox extends RenderBox
   RenderEditableBox? childAtPosition(TextPosition position) {
     assert(firstChild != null);
 
-    final targetNode = node.lookup(position.offset).node;
-
+    final targetNode = node.lookup(math.min(position.offset, node.length), inclusive: true).node;
     var targetChild = firstChild;
     while (targetChild != null) {
       if (targetChild.node == targetNode) {
