@@ -237,7 +237,7 @@ class RenderEditor extends RenderEditableContainerBox
             : endpoints.last;
     // if (endpoints.length == 1) {
     // Collapsed selection => caret
-    final child = childAtPosition(selection.extent)!;
+    final child = childAtPosition(selection.extent);
     final childPosition =
         TextPosition(offset: selection.extentOffset - child.node.offset);
     final caretTop = targetEndpoint.point.dy -
@@ -264,7 +264,7 @@ class RenderEditor extends RenderEditableContainerBox
     // _layoutText(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
 
     if (selection.isCollapsed) {
-      final child = childAtPosition(selection.extent)!;
+      final child = childAtPosition(selection.extent);
       final localPosition =
           TextPosition(offset: selection.extentOffset - child.node.offset);
       final localOffset = child.getOffsetForCaret(localPosition);
@@ -361,7 +361,7 @@ class RenderEditor extends RenderEditableContainerBox
       return;
     }
     final position = getPositionForOffset(_lastTapDownPosition!);
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final nodeOffset = child.node.offset;
     final localPosition = TextPosition(
       offset: position.offset - nodeOffset,
@@ -432,7 +432,7 @@ class RenderEditor extends RenderEditableContainerBox
 //    _textLayoutLastMaxWidth == constraints.maxWidth &&
 //        _textLayoutLastMinWidth == constraints.minWidth,
 //    'Last width ($_textLayoutLastMinWidth, $_textLayoutLastMaxWidth) not the same as max width constraint (${constraints.minWidth}, ${constraints.maxWidth}).');
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final nodeOffset = child.node.offset;
     final localPosition = TextPosition(
         offset: position.offset - nodeOffset, affinity: position.affinity);
@@ -454,7 +454,7 @@ class RenderEditor extends RenderEditableContainerBox
 //    _textLayoutLastMaxWidth == constraints.maxWidth &&
 //        _textLayoutLastMinWidth == constraints.minWidth,
 //    'Last width ($_textLayoutLastMinWidth, $_textLayoutLastMaxWidth) not the same as max width constraint (${constraints.minWidth}, ${constraints.maxWidth}).');
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final nodeOffset = child.node.offset;
     final localPosition = TextPosition(
         offset: position.offset - nodeOffset, affinity: position.affinity);
@@ -550,7 +550,7 @@ class RenderEditor extends RenderEditableContainerBox
 
   @override
   double preferredLineHeight(TextPosition position) {
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final localPosition =
         TextPosition(offset: position.offset - child.node.offset);
     return child.preferredLineHeight(localPosition);

@@ -78,7 +78,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
 
   @override
   TextRange getLineBoundary(TextPosition position) {
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final positionInChild = TextPosition(
       offset: position.offset - child.node.offset,
       affinity: position.affinity,
@@ -92,7 +92,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
 
   @override
   Offset getOffsetForCaret(TextPosition position) {
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final localPosition = TextPosition(
       offset: position.offset - child.node.offset,
       affinity: position.affinity,
@@ -118,7 +118,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
 
   @override
   TextRange getWordBoundary(TextPosition position) {
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     // memoize node's offset since it's not cached by the document.
     final nodeOffset = child.node.offset;
     final childPosition = TextPosition(offset: position.offset - nodeOffset);
@@ -133,7 +133,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
   TextPosition? getPositionAbove(TextPosition position) {
     assert(position.offset < node.length);
 
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final childLocalPosition =
         TextPosition(offset: position.offset - child.node.offset);
     // ignore: omit_local_variable_types
@@ -160,7 +160,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
   TextPosition? getPositionBelow(TextPosition position) {
     assert(position.offset < node.length);
 
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final childLocalPosition =
         TextPosition(offset: position.offset - child.node.offset);
     // ignore: omit_local_variable_types
@@ -185,7 +185,7 @@ class RenderEditableTextBlock extends RenderEditableContainerBox
 
   @override
   double preferredLineHeight(TextPosition position) {
-    final child = childAtPosition(position)!;
+    final child = childAtPosition(position);
     final localPosition =
         TextPosition(offset: position.offset - child.node.offset);
     return child.preferredLineHeight(localPosition);

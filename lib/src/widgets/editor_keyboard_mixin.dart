@@ -242,7 +242,7 @@ mixin RawEditorStateKeyboardMixin on EditorState {
       final originPosition = TextPosition(
           offset: upArrow ? selection.baseOffset : selection.extentOffset);
 
-      final child = renderEditor!.childAtPosition(originPosition)!;
+      final child = renderEditor!.childAtPosition(originPosition);
       final localPosition = TextPosition(
           offset: originPosition.offset - child.node.documentOffset);
 
