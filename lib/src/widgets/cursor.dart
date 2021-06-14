@@ -86,15 +86,14 @@ class CursorStyle {
   bool operator ==(dynamic other) {
     if (identical(this, other)) return true;
     if (other is! CursorStyle) return false;
-    final CursorStyle typedOther = other;
-    return typedOther.color == color &&
-        typedOther.backgroundColor == backgroundColor &&
-        typedOther.width == width &&
-        typedOther.height == height &&
-        typedOther.radius == radius &&
-        typedOther.offset == offset &&
-        typedOther.opacityAnimates == opacityAnimates &&
-        typedOther.paintAboveText == paintAboveText;
+    return other.color == color &&
+        other.backgroundColor == backgroundColor &&
+        other.width == width &&
+        other.height == height &&
+        other.radius == radius &&
+        other.offset == offset &&
+        other.opacityAnimates == opacityAnimates &&
+        other.paintAboveText == paintAboveText;
   }
 
   @override

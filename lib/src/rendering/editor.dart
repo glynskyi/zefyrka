@@ -268,7 +268,7 @@ class RenderEditor extends RenderEditableContainerBox
       final localPosition =
           TextPosition(offset: selection.extentOffset - child.node.offset);
       final localOffset = child.getOffsetForCaret(localPosition);
-      final BoxParentData parentData = child.parentData as BoxParentData;
+      final parentData = child.parentData as BoxParentData;
       final start = Offset(0.0, child.preferredLineHeight(localPosition)) +
           localOffset +
           parentData.offset;
@@ -285,8 +285,7 @@ class RenderEditor extends RenderEditableContainerBox
       }
       assert(baseChild != null);
 
-      final BoxParentData baseParentData =
-          baseChild!.parentData as BoxParentData;
+      final baseParentData = baseChild!.parentData as BoxParentData;
       final baseSelection =
           localSelection(baseChild.node, selection, fromParent: true);
       var basePoint = baseChild.getBaseEndpointForSelection(baseSelection);
@@ -303,8 +302,7 @@ class RenderEditor extends RenderEditableContainerBox
       }
       assert(extentChild != null);
 
-      final BoxParentData extentParentData =
-          extentChild!.parentData as BoxParentData;
+      final extentParentData = extentChild!.parentData as BoxParentData;
       final extentSelection =
           localSelection(extentChild.node, selection, fromParent: true);
       var extentPoint =
@@ -562,7 +560,7 @@ class RenderEditor extends RenderEditableContainerBox
     final local = globalToLocal(offset);
     final child = childAtOffset(local)!;
 
-    final BoxParentData parentData = child.parentData as BoxParentData;
+    final parentData = child.parentData as BoxParentData;
     final localOffset = local - parentData.offset;
     final localPosition = child.getPositionForOffset(localOffset);
     return TextPosition(

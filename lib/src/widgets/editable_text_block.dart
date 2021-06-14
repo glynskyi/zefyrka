@@ -138,7 +138,7 @@ class EditableTextBlock extends StatelessWidget {
   }
 
   double _getIndentWidth(LineNode line) {
-    int additionalIndent = 0;
+    var additionalIndent = 0;
     final indent = line.style.get(NotusAttribute.indent);
     if (indent != null) {
       additionalIndent = indent.value!;

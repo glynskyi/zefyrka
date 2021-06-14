@@ -348,7 +348,7 @@ class EditorTextSelectionOverlay {
           baseLineHeight,
           midpoint,
           endpoints,
-          selectionDelegate!,
+          selectionDelegate,
           clipboardStatus!,
           null,
         ),
@@ -367,9 +367,9 @@ class EditorTextSelectionOverlay {
         textPosition = newSelection.extent;
         break;
     }
-    selectionDelegate!.textEditingValue =
+    selectionDelegate.textEditingValue =
         _value.copyWith(selection: newSelection, composing: TextRange.empty);
-    selectionDelegate!.bringIntoView(textPosition);
+    selectionDelegate.bringIntoView(textPosition);
   }
 }
 

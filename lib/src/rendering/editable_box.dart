@@ -306,8 +306,7 @@ class RenderEditableContainerBox extends RenderBox
             .deflate(_resolvedPadding!);
     while (child != null) {
       child.layout(innerConstraints, parentUsesSize: true);
-      final EditableContainerParentData childParentData =
-          child.parentData as EditableContainerParentData;
+      final childParentData = child.parentData as EditableContainerParentData;
       childParentData.offset = Offset(_resolvedPadding!.left, mainAxisExtent);
       mainAxisExtent += child.size.height;
       assert(child.parentData == childParentData);
@@ -330,8 +329,7 @@ class RenderEditableContainerBox extends RenderBox
     var child = firstChild;
     while (child != null) {
       extent = math.max(extent, childSize(child));
-      final EditableContainerParentData childParentData =
-          child.parentData as EditableContainerParentData;
+      final childParentData = child.parentData as EditableContainerParentData;
       child = childParentData.nextSibling;
     }
     return extent;
@@ -342,8 +340,7 @@ class RenderEditableContainerBox extends RenderBox
     var child = firstChild;
     while (child != null) {
       extent += childSize(child);
-      final EditableContainerParentData childParentData =
-          child.parentData as EditableContainerParentData;
+      final childParentData = child.parentData as EditableContainerParentData;
       child = childParentData.nextSibling;
     }
     return extent;
