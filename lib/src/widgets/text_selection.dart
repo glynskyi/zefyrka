@@ -44,7 +44,7 @@ class EditorTextSelectionOverlay {
     required this.renderObject,
     this.selectionControls,
     bool handlesVisible = false,
-    this.selectionDelegate,
+    required this.selectionDelegate,
     this.dragStartBehavior = DragStartBehavior.start,
     this.onSelectionHandleTapped,
     this.clipboardStatus,
@@ -91,7 +91,7 @@ class EditorTextSelectionOverlay {
 
   /// The delegate for manipulating the current selection in the owning
   /// text field.
-  final TextSelectionDelegate? selectionDelegate;
+  final TextSelectionDelegate selectionDelegate;
 
   /// Determines the way that drag start behavior is handled.
   ///

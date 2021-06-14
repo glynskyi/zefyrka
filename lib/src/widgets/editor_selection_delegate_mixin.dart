@@ -14,14 +14,15 @@ mixin RawEditorStateSelectionDelegateMixin on EditorState
   @override
   set textEditingValue(TextEditingValue value) {
     if (value.text == textEditingValue.text) {
-      widget.controller.updateSelection(value.selection, source: ChangeSource.local);
+      widget.controller
+          .updateSelection(value.selection, source: ChangeSource.local);
     } else {
-      __setEditingValue(value);
+      _setEditingValue(value);
     }
   }
 
-  void __setEditingValue(TextEditingValue value) async {
-    if (await __isItCut(value)) {
+  void _setEditingValue(TextEditingValue value) async {
+    if (await _isItCut(value)) {
       widget.controller.replaceText(
         textEditingValue.selection.start,
         textEditingValue.text.length - value.text.length,
@@ -44,10 +45,11 @@ mixin RawEditorStateSelectionDelegateMixin on EditorState
     }
   }
 
-  Future<bool> __isItCut(TextEditingValue value) async {
+  Future<bool> _isItCut(TextEditingValue value) async {
     final data = await Clipboard.getData(Clipboard.kTextPlain);
 
-    return textEditingValue.text.length - value.text.length == data?.text?.length;
+    return textEditingValue.text.length - value.text.length ==
+        data?.text?.length;
   }
 
   @override
