@@ -1253,7 +1253,9 @@ class RawEditorState extends EditorState
 
   @override
   void userUpdateTextEditingValue(
-      TextEditingValue value, SelectionChangedCause cause) {}
+      TextEditingValue value, SelectionChangedCause cause) {
+    textEditingValue = value;
+  }
 }
 
 class _Editor extends MultiChildRenderObjectWidget {
