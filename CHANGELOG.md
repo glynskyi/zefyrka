@@ -1,3 +1,7 @@
+## 1.0.5
+
+* removes `quiver_hashcode` package from dependencies
+
 ## 1.0.4
 
 * fixes the copy/paste actions on mobile platforms (#10)
