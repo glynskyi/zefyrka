@@ -936,7 +936,13 @@ class RawEditorState extends EditorState
   }
 
   void _didChangeTextEditingValue() {
-    requestKeyboard();
+    // For users with Samsung devices with a Bluetooth keyboard,
+    // the soft keyboard will slide down when you type the first letter.
+    // Then, the soft keyboard remains down, allowing you to type additionally.
+    //
+    // When yoy call requestKeyboard() here,
+    // the problem is that the keyboard goes up and down every time you type.
+    // requestKeyboard();
 
     _showCaretOnScreen();
     updateRemoteValueIfNeeded();
