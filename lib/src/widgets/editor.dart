@@ -126,6 +126,9 @@ class ZefyrEditor extends StatefulWidget {
   /// the text field from the clipboard.
   final bool enableInteractiveSelection;
 
+  /// Whether to enable auto-suggestions in the system keyboard (where applicable).
+  final bool enableSuggestions;
+
   /// The minimum height to be occupied by this editor.
   ///
   /// This only has effect if [scrollable] is set to `true` and [expands] is
@@ -209,6 +212,7 @@ class ZefyrEditor extends StatefulWidget {
     this.showCursor = true,
     this.readOnly = false,
     this.enableInteractiveSelection = true,
+    this.enableSuggestions = false,
     this.minHeight,
     this.maxHeight,
     this.scrollAreaMinHeight,
@@ -315,6 +319,7 @@ class _ZefyrEditorState extends State<ZefyrEditor>
       showCursor: widget.showCursor,
       readOnly: widget.readOnly,
       enableInteractiveSelection: widget.enableInteractiveSelection,
+      enableSuggestions: widget.enableSuggestions,
       minHeight: widget.minHeight,
       maxHeight: widget.maxHeight,
       scrollAreaMinHeight: widget.scrollAreaMinHeight,
