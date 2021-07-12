@@ -503,6 +503,7 @@ class RawEditor extends StatefulWidget {
       paste: true,
       selectAll: true,
     ),
+    this.enableSuggestions = true,
     this.cursorStyle,
     this.showSelectionHandles = false,
     this.selectionControls,
@@ -593,6 +594,9 @@ class RawEditor extends StatefulWidget {
   ///
   ///  * [TextCapitalization], for a description of each capitalization behavior.
   final TextCapitalization textCapitalization;
+
+  /// Whether to enable text suggestions in the keyboard when typing.
+  final bool enableSuggestions;
 
   /// The maximum height this editor can have.
   ///
