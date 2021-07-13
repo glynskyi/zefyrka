@@ -1,3 +1,7 @@
+## 1.0.7
+
+* added the popup menu for the secondary tap
+
 ## 1.0.6
 
 * exposes the `enableSuggestion` option
