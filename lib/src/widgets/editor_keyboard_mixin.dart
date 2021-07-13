@@ -168,7 +168,7 @@ mixin RawEditorStateKeyboardMixin on EditorState {
           // including whitespace.
           final int startPoint =
               previousCharacter(newSelection.extentOffset, plainText, false);
-          final TextSelection textSelection = renderEditor!
+          final TextSelection textSelection = renderEditor
               .selectWordAtPosition(TextPosition(offset: startPoint));
           newSelection =
               newSelection.copyWith(extentOffset: textSelection.baseOffset);
@@ -179,7 +179,7 @@ mixin RawEditorStateKeyboardMixin on EditorState {
           // boundaries without including whitespace.
           final int startPoint =
               nextCharacter(newSelection.extentOffset, plainText, false);
-          final TextSelection textSelection = renderEditor!
+          final TextSelection textSelection = renderEditor
               .selectWordAtPosition(TextPosition(offset: startPoint));
           newSelection =
               newSelection.copyWith(extentOffset: textSelection.extentOffset);
@@ -192,7 +192,7 @@ mixin RawEditorStateKeyboardMixin on EditorState {
           // This is not the optimal approach, see comment below for details.
           final int startPoint =
               previousCharacter(newSelection.extentOffset, plainText, false);
-          final TextSelection textSelection = renderEditor!
+          final TextSelection textSelection = renderEditor
               .selectLineAtPosition(TextPosition(offset: startPoint));
           newSelection =
               newSelection.copyWith(extentOffset: textSelection.baseOffset);
@@ -208,7 +208,7 @@ mixin RawEditorStateKeyboardMixin on EditorState {
           // largest right edge of all the remaining boxes.
           final int startPoint = newSelection.extentOffset;
           if (startPoint < plainText.length) {
-            final TextSelection textSelection = renderEditor!
+            final TextSelection textSelection = renderEditor
                 .selectLineAtPosition(TextPosition(offset: startPoint));
             newSelection =
                 newSelection.copyWith(extentOffset: textSelection.extentOffset);
@@ -242,7 +242,7 @@ mixin RawEditorStateKeyboardMixin on EditorState {
       final originPosition = TextPosition(
           offset: upArrow ? selection.baseOffset : selection.extentOffset);
 
-      final child = renderEditor!.childAtPosition(originPosition);
+      final child = renderEditor.childAtPosition(originPosition);
       final localPosition = TextPosition(
           offset: originPosition.offset - child.node.documentOffset);
 
@@ -254,8 +254,8 @@ mixin RawEditorStateKeyboardMixin on EditorState {
         // There was no text above/below in the current child, check the direct
         // sibling.
         final sibling = upArrow
-            ? renderEditor!.childBefore(child)
-            : renderEditor!.childAfter(child);
+            ? renderEditor.childBefore(child)
+            : renderEditor.childAfter(child);
         if (sibling == null) {
           // reached beginning or end of the document, move to the
           // first/last character

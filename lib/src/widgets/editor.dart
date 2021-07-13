@@ -364,7 +364,7 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
   void onForcePressStart(ForcePressDetails details) {
     super.onForcePressStart(details);
     if (delegate.selectionEnabled && shouldShowSelectionToolbar) {
-      editor!.showToolbar();
+      editor.showToolbar();
     }
   }
 
@@ -379,7 +379,7 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
       switch (Theme.of(_state.context).platform) {
         case TargetPlatform.iOS:
         case TargetPlatform.macOS:
-          renderEditor!.selectPositionAt(
+          renderEditor.selectPositionAt(
             from: details.globalPosition,
             cause: SelectionChangedCause.longPress,
           );
@@ -388,7 +388,7 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
         case TargetPlatform.fuchsia:
         case TargetPlatform.linux:
         case TargetPlatform.windows:
-          renderEditor!.selectWordsInRange(
+          renderEditor.selectWordsInRange(
             from: details.globalPosition - details.offsetFromOrigin,
             to: details.globalPosition,
             cause: SelectionChangedCause.longPress,
@@ -399,17 +399,17 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
   }
 
   void _launchUrlIfNeeded(TapUpDetails details) {
-    final pos = renderEditor!.getPositionForOffset(details.globalPosition);
-    final result = editor!.widget.controller.document.lookupLine(pos.offset);
+    final pos = renderEditor.getPositionForOffset(details.globalPosition);
+    final result = editor.widget.controller.document.lookupLine(pos.offset);
     if (result.node == null) return;
     final line = result.node as LineNode;
     final segmentResult = line.lookup(result.offset);
     if (segmentResult.node == null) return;
     final segment = segmentResult.node as LeafNode;
     if (segment.style.contains(NotusAttribute.link) &&
-        editor!.widget.onLaunchUrl != null) {
-      if (editor!.widget.readOnly) {
-        editor!.widget
+        editor.widget.onLaunchUrl != null) {
+      if (editor.widget.readOnly) {
+        editor.widget
             .onLaunchUrl!(segment.style.get(NotusAttribute.link)!.value!);
       } else {
         // TODO: Implement a toolbar to display the URL and allow to launch it.
@@ -420,7 +420,7 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
 
   @override
   void onSingleTapUp(TapUpDetails details) {
-    editor!.hideToolbar();
+    editor.hideToolbar();
 
     // TODO: Explore if we can forward tap up events to the TextSpan gesture detector
     _launchUrlIfNeeded(details);
@@ -434,13 +434,13 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
             case PointerDeviceKind.stylus:
             case PointerDeviceKind.invertedStylus:
               // Precise devices should place the cursor at a precise position.
-              renderEditor!.selectPosition(cause: SelectionChangedCause.tap);
+              renderEditor.selectPosition(cause: SelectionChangedCause.tap);
               break;
             case PointerDeviceKind.touch:
             case PointerDeviceKind.unknown:
               // On macOS/iOS/iPadOS a touch tap places the cursor at the edge
               // of the word.
-              renderEditor!.selectWordEdge(cause: SelectionChangedCause.tap);
+              renderEditor.selectWordEdge(cause: SelectionChangedCause.tap);
               break;
           }
           break;
@@ -448,7 +448,7 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
         case TargetPlatform.fuchsia:
         case TargetPlatform.linux:
         case TargetPlatform.windows:
-          renderEditor!.selectPosition(cause: SelectionChangedCause.tap);
+          renderEditor.selectPosition(cause: SelectionChangedCause.tap);
           break;
       }
     }
@@ -463,7 +463,7 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
       switch (Theme.of(_state.context).platform) {
         case TargetPlatform.iOS:
         case TargetPlatform.macOS:
-          renderEditor!.selectPositionAt(
+          renderEditor.selectPositionAt(
             from: details.globalPosition,
             cause: SelectionChangedCause.longPress,
           );
@@ -472,7 +472,7 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
         case TargetPlatform.fuchsia:
         case TargetPlatform.linux:
         case TargetPlatform.windows:
-          renderEditor!.selectWord(cause: SelectionChangedCause.longPress);
+          renderEditor.selectWord(cause: SelectionChangedCause.longPress);
           Feedback.forLongPress(_state.context);
           break;
       }
@@ -708,7 +708,7 @@ abstract class EditorState extends State<RawEditor> {
 
   set textEditingValue(TextEditingValue value);
 
-  RenderEditor? get renderEditor;
+  RenderEditor get renderEditor;
 
   EditorTextSelectionOverlay? get selectionOverlay;
 
@@ -769,8 +769,8 @@ class RawEditorState extends EditorState
   ///
   /// This property is typically used to notify the renderer of input gestures.
   @override
-  RenderEditor? get renderEditor =>
-      _editorKey.currentContext!.findRenderObject() as RenderEditor?;
+  RenderEditor get renderEditor =>
+      _editorKey.currentContext!.findRenderObject() as RenderEditor;
 
   /// Express interest in interacting with the keyboard.
   ///
@@ -1064,10 +1064,10 @@ class RawEditorState extends EditorState
 
       final viewport = RenderAbstractViewport.of(renderEditor)!;
       final editorOffset =
-          renderEditor!.localToGlobal(Offset(0.0, 0.0), ancestor: viewport);
+          renderEditor.localToGlobal(Offset(0.0, 0.0), ancestor: viewport);
       final offsetInViewport = _scrollController!.offset + editorOffset.dy;
 
-      final offset = renderEditor!.getOffsetToRevealCursor(
+      final offset = renderEditor.getOffsetToRevealCursor(
         _scrollController!.position.viewportDimension,
         _scrollController!.offset,
         offsetInViewport,

@@ -675,6 +675,18 @@ class EditorTextSelectionGestureDetectorBuilder {
   @protected
   final EditorTextSelectionGestureDetectorBuilderDelegate delegate;
 
+  /// Returns true if lastSecondaryTapDownPosition was on selection.
+  bool get _lastSecondaryTapWasOnSelection {
+    assert(renderEditor.lastSecondaryTapDownPosition != null);
+
+    final TextPosition textPosition = renderEditor.getPositionForOffset(
+      renderEditor.lastSecondaryTapDownPosition!,
+    );
+
+    return renderEditor.selection.start <= textPosition.offset &&
+        renderEditor.selection.end >= textPosition.offset;
+  }
+
   /// Whether to show the selection toolbar.
   ///
   /// It is based on the signal source when a [onTapDown] is called. This getter
@@ -686,12 +698,12 @@ class EditorTextSelectionGestureDetectorBuilder {
   /// The [State] of the [EditableText] for which the builder will provide a
   /// [EditorTextSelectionGestureDetector].
   @protected
-  EditorState? get editor => delegate.editableTextKey.currentState;
+  EditorState get editor => delegate.editableTextKey.currentState!;
 
   /// The [RenderObject] of the [EditableText] for which the builder will
   /// provide a [EditorTextSelectionGestureDetector].
   @protected
-  RenderEditor? get renderEditor => editor!.renderEditor;
+  RenderEditor get renderEditor => editor.renderEditor;
 
   /// Handler for [EditorTextSelectionGestureDetector.onTapDown].
   ///
@@ -703,7 +715,7 @@ class EditorTextSelectionGestureDetectorBuilder {
   ///  * [EditorTextSelectionGestureDetector.onTapDown], which triggers this callback.
   @protected
   void onTapDown(TapDownDetails details) {
-    renderEditor!.handleTapDown(details);
+    renderEditor.handleTapDown(details);
     // The selection overlay should only be shown when the user is interacting
     // through a touch screen (via either a finger or a stylus). A mouse shouldn't
     // trigger the selection overlay.
@@ -730,7 +742,7 @@ class EditorTextSelectionGestureDetectorBuilder {
     assert(delegate.forcePressEnabled);
     _shouldShowSelectionToolbar = true;
     if (delegate.selectionEnabled) {
-      renderEditor!.selectWordsInRange(
+      renderEditor.selectWordsInRange(
         from: details.globalPosition,
         cause: SelectionChangedCause.forcePress,
       );
@@ -751,11 +763,11 @@ class EditorTextSelectionGestureDetectorBuilder {
   @protected
   void onForcePressEnd(ForcePressDetails details) {
     assert(delegate.forcePressEnabled);
-    renderEditor!.selectWordsInRange(
+    renderEditor.selectWordsInRange(
       from: details.globalPosition,
       cause: SelectionChangedCause.forcePress,
     );
-    if (shouldShowSelectionToolbar) editor!.showToolbar();
+    if (shouldShowSelectionToolbar) editor.showToolbar();
   }
 
   /// Handler for [EditorTextSelectionGestureDetector.onSingleTapUp].
@@ -769,7 +781,7 @@ class EditorTextSelectionGestureDetectorBuilder {
   @protected
   void onSingleTapUp(TapUpDetails details) {
     if (delegate.selectionEnabled) {
-      renderEditor!.selectWordEdge(cause: SelectionChangedCause.tap);
+      renderEditor.selectWordEdge(cause: SelectionChangedCause.tap);
     }
   }
 
@@ -798,7 +810,7 @@ class EditorTextSelectionGestureDetectorBuilder {
   @protected
   void onSingleLongTapStart(LongPressStartDetails details) {
     if (delegate.selectionEnabled) {
-      renderEditor!.selectPositionAt(
+      renderEditor.selectPositionAt(
         from: details.globalPosition,
         cause: SelectionChangedCause.longPress,
       );
@@ -817,7 +829,7 @@ class EditorTextSelectionGestureDetectorBuilder {
   @protected
   void onSingleLongTapMoveUpdate(LongPressMoveUpdateDetails details) {
     if (delegate.selectionEnabled) {
-      renderEditor!.selectPositionAt(
+      renderEditor.selectPositionAt(
         from: details.globalPosition,
         cause: SelectionChangedCause.longPress,
       );
@@ -834,7 +846,36 @@ class EditorTextSelectionGestureDetectorBuilder {
   ///    callback.
   @protected
   void onSingleLongTapEnd(LongPressEndDetails details) {
-    if (shouldShowSelectionToolbar) editor!.showToolbar();
+    if (shouldShowSelectionToolbar) editor.showToolbar();
+  }
+
+  /// Handler for [TextSelectionGestureDetector.onSecondaryTap].
+  ///
+  /// By default, selects the word if possible and shows the toolbar.
+  @protected
+  void onSecondaryTap() {
+    if (delegate.selectionEnabled) {
+      if (!_lastSecondaryTapWasOnSelection) {
+        renderEditor.selectWord(cause: SelectionChangedCause.tap);
+      }
+      if (shouldShowSelectionToolbar) {
+        editor.hideToolbar();
+        editor.showToolbar();
+      }
+    }
+  }
+
+  /// Handler for [TextSelectionGestureDetector.onSecondaryTapDown].
+  ///
+  /// See also:
+  ///
+  ///  * [TextSelectionGestureDetector.onSecondaryTapDown], which triggers this
+  ///    callback.
+  ///  * [onSecondaryTap], which is typically called after this.
+  @protected
+  void onSecondaryTapDown(TapDownDetails details) {
+    renderEditor.handleSecondaryTapDown(details);
+    _shouldShowSelectionToolbar = true;
   }
 
   /// Handler for [EditorTextSelectionGestureDetector.onDoubleTapDown].
@@ -849,8 +890,8 @@ class EditorTextSelectionGestureDetectorBuilder {
   @protected
   void onDoubleTapDown(TapDownDetails details) {
     if (delegate.selectionEnabled) {
-      renderEditor!.selectWord(cause: SelectionChangedCause.tap);
-      if (shouldShowSelectionToolbar) editor!.showToolbar();
+      renderEditor.selectWord(cause: SelectionChangedCause.tap);
+      if (shouldShowSelectionToolbar) editor.showToolbar();
     }
   }
 
@@ -864,7 +905,7 @@ class EditorTextSelectionGestureDetectorBuilder {
   ///    this callback.
   @protected
   void onDragSelectionStart(DragStartDetails details) {
-    renderEditor!.selectPositionAt(
+    renderEditor.selectPositionAt(
       from: details.globalPosition,
       cause: SelectionChangedCause.drag,
     );
@@ -882,7 +923,7 @@ class EditorTextSelectionGestureDetectorBuilder {
   @protected
   void onDragSelectionUpdate(
       DragStartDetails startDetails, DragUpdateDetails updateDetails) {
-    renderEditor!.selectPositionAt(
+    renderEditor.selectPositionAt(
       from: startDetails.globalPosition,
       to: updateDetails.globalPosition,
       cause: SelectionChangedCause.drag,
@@ -916,6 +957,8 @@ class EditorTextSelectionGestureDetectorBuilder {
       onTapDown: onTapDown,
       onForcePressStart: delegate.forcePressEnabled ? onForcePressStart : null,
       onForcePressEnd: delegate.forcePressEnabled ? onForcePressEnd : null,
+      onSecondaryTap: onSecondaryTap,
+      onSecondaryTapDown: onSecondaryTapDown,
       onSingleTapUp: onSingleTapUp,
       onSingleTapCancel: onSingleTapCancel,
       onSingleLongTapStart: onSingleLongTapStart,
@@ -953,6 +996,8 @@ class EditorTextSelectionGestureDetector extends StatefulWidget {
     this.onTapDown,
     this.onForcePressStart,
     this.onForcePressEnd,
+    this.onSecondaryTap,
+    this.onSecondaryTapDown,
     this.onSingleTapUp,
     this.onSingleTapCancel,
     this.onSingleLongTapStart,
@@ -978,6 +1023,12 @@ class EditorTextSelectionGestureDetector extends StatefulWidget {
   /// Called when a pointer that had previously triggered [onForcePressStart] is
   /// lifted off the screen.
   final GestureForcePressEndCallback? onForcePressEnd;
+
+  /// Called for a tap event with the secondary mouse button.
+  final GestureTapCallback? onSecondaryTap;
+
+  /// Called for a tap down event with the secondary mouse button.
+  final GestureTapDownCallback? onSecondaryTapDown;
 
   /// Called for each distinct tap except for every second tap of a double tap.
   /// For example, if the detector was configured with [onTapDown] and
@@ -1051,9 +1102,7 @@ class _EditorTextSelectionGestureDetectorState
   // The down handler is force-run on success of a single tap and optimistically
   // run before a long press success.
   void _handleTapDown(TapDownDetails details) {
-    if (widget.onTapDown != null) {
-      widget.onTapDown!(details);
-    }
+    widget.onTapDown?.call(details);
     // This isn't detected as a double tap gesture in the gesture recognizer
     // because it's 2 single taps, each of which may do different things depending
     // on whether it's a single tap, the first tap of a double tap, the second
@@ -1062,9 +1111,7 @@ class _EditorTextSelectionGestureDetectorState
         _isWithinDoubleTapTolerance(details.globalPosition)) {
       // If there was already a previous tap, the second down hold/tap is a
       // double tap down.
-      if (widget.onDoubleTapDown != null) {
-        widget.onDoubleTapDown!(details);
-      }
+      widget.onDoubleTapDown?.call(details);
 
       _doubleTapTimer!.cancel();
       _doubleTapTimeout();
@@ -1074,9 +1121,7 @@ class _EditorTextSelectionGestureDetectorState
 
   void _handleTapUp(TapUpDetails details) {
     if (!_isDoubleTap) {
-      if (widget.onSingleTapUp != null) {
-        widget.onSingleTapUp!(details);
-      }
+      widget.onSingleTapUp?.call(details);
       _lastTapOffset = details.globalPosition;
       _doubleTapTimer = Timer(kDoubleTapTimeout, _doubleTapTimeout);
     }
@@ -1084,9 +1129,7 @@ class _EditorTextSelectionGestureDetectorState
   }
 
   void _handleTapCancel() {
-    if (widget.onSingleTapCancel != null) {
-      widget.onSingleTapCancel!();
-    }
+    widget.onSingleTapCancel?.call();
   }
 
   DragStartDetails? _lastDragStartDetails;
@@ -1096,9 +1139,7 @@ class _EditorTextSelectionGestureDetectorState
   void _handleDragStart(DragStartDetails details) {
     assert(_lastDragStartDetails == null);
     _lastDragStartDetails = details;
-    if (widget.onDragSelectionStart != null) {
-      widget.onDragSelectionStart!(details);
-    }
+    widget.onDragSelectionStart?.call(details);
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
@@ -1117,10 +1158,8 @@ class _EditorTextSelectionGestureDetectorState
   void _handleDragUpdateThrottled() {
     assert(_lastDragStartDetails != null);
     assert(_lastDragUpdateDetails != null);
-    if (widget.onDragSelectionUpdate != null) {
-      widget.onDragSelectionUpdate!(
-          _lastDragStartDetails!, _lastDragUpdateDetails!);
-    }
+    widget.onDragSelectionUpdate
+        ?.call(_lastDragStartDetails!, _lastDragUpdateDetails!);
     _dragUpdateThrottleTimer = null;
     _lastDragUpdateDetails = null;
   }
@@ -1133,9 +1172,7 @@ class _EditorTextSelectionGestureDetectorState
       _dragUpdateThrottleTimer!.cancel();
       _handleDragUpdateThrottled();
     }
-    if (widget.onDragSelectionEnd != null) {
-      widget.onDragSelectionEnd!(details);
-    }
+    widget.onDragSelectionEnd?.call(details);
     _dragUpdateThrottleTimer = null;
     _lastDragStartDetails = null;
     _lastDragUpdateDetails = null;
@@ -1144,11 +1181,11 @@ class _EditorTextSelectionGestureDetectorState
   void _forcePressStarted(ForcePressDetails details) {
     _doubleTapTimer?.cancel();
     _doubleTapTimer = null;
-    if (widget.onForcePressStart != null) widget.onForcePressStart!(details);
+    widget.onForcePressStart?.call(details);
   }
 
   void _forcePressEnded(ForcePressDetails details) {
-    if (widget.onForcePressEnd != null) widget.onForcePressEnd!(details);
+    widget.onForcePressEnd?.call(details);
   }
 
   void _handleLongPressStart(LongPressStartDetails details) {
@@ -1189,14 +1226,13 @@ class _EditorTextSelectionGestureDetectorState
     final Map<Type, GestureRecognizerFactory> gestures =
         <Type, GestureRecognizerFactory>{};
 
-    // Use _TransparentTapGestureRecognizer so that TextSelectionGestureDetector
-    // can receive the same tap events that a selection handle placed visually
-    // on top of it also receives.
-    gestures[_TransparentTapGestureRecognizer] =
-        GestureRecognizerFactoryWithHandlers<_TransparentTapGestureRecognizer>(
-      () => _TransparentTapGestureRecognizer(debugOwner: this),
-      (_TransparentTapGestureRecognizer instance) {
+    gestures[TapGestureRecognizer] =
+        GestureRecognizerFactoryWithHandlers<TapGestureRecognizer>(
+      () => TapGestureRecognizer(debugOwner: this),
+      (TapGestureRecognizer instance) {
         instance
+          ..onSecondaryTap = widget.onSecondaryTap
+          ..onSecondaryTapDown = widget.onSecondaryTapDown
           ..onTapDown = _handleTapDown
           ..onTapUp = _handleTapUp
           ..onTapCancel = _handleTapCancel;
@@ -1208,7 +1244,8 @@ class _EditorTextSelectionGestureDetectorState
         widget.onSingleLongTapEnd != null) {
       gestures[LongPressGestureRecognizer] =
           GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
-        () => LongPressGestureRecognizer(debugOwner: this),
+        () => LongPressGestureRecognizer(
+            debugOwner: this, kind: PointerDeviceKind.touch),
         (LongPressGestureRecognizer instance) {
           instance
             ..onLongPressStart = _handleLongPressStart
@@ -1225,7 +1262,8 @@ class _EditorTextSelectionGestureDetectorState
       // https://github.com/flutter/flutter/issues/28676
       gestures[HorizontalDragGestureRecognizer] =
           GestureRecognizerFactoryWithHandlers<HorizontalDragGestureRecognizer>(
-        () => HorizontalDragGestureRecognizer(debugOwner: this),
+        () => HorizontalDragGestureRecognizer(
+            debugOwner: this, kind: PointerDeviceKind.mouse),
         (HorizontalDragGestureRecognizer instance) {
           instance
             // Text selection should start from the position of the first pointer
