@@ -1,3 +1,7 @@
+## 1.0.6
+
+* exposes the `enableSuggestion` option
+
 ## 1.0.5
 
 * removes `quiver_hashcode` package from dependencies
