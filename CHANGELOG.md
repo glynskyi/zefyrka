@@ -1,3 +1,7 @@
+## 1.0.8
+
+* fixed the selection with handles on the desktop
+
 ## 1.0.7
 
 * added the popup menu for the secondary tap

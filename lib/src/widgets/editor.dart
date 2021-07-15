@@ -988,7 +988,8 @@ class RawEditorState extends EditorState
     openOrCloseConnection();
     _cursorController!
         .startOrStopCursorTimerIfNeeded(_hasFocus, widget.controller.selection);
-    _updateOrDisposeSelectionOverlayIfNeeded();
+    SchedulerBinding.instance!.addPostFrameCallback(
+        (Duration _) => _updateOrDisposeSelectionOverlayIfNeeded());
     if (_hasFocus) {
       // Listen for changing viewInsets, which indicates keyboard showing up.
       WidgetsBinding.instance!.addObserver(this);
