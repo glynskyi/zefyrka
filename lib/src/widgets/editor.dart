@@ -200,6 +200,9 @@ class ZefyrEditor extends StatefulWidget {
   /// Defaults to [defaultZefyrEmbedBuilder].
   final ZefyrEmbedBuilder embedBuilder;
 
+  final List<Widget>? topWidgets;
+  final List<Widget>? bottomWidgets;
+
   const ZefyrEditor({
     Key? key,
     required this.controller,
@@ -222,6 +225,8 @@ class ZefyrEditor extends StatefulWidget {
     this.scrollPhysics,
     this.showSelectionHandles,
     this.onLaunchUrl,
+    this.topWidgets,
+    this.bottomWidgets,
     this.embedBuilder = defaultZefyrEmbedBuilder,
   }) : super(key: key);
 
@@ -342,6 +347,8 @@ class _ZefyrEditorState extends State<ZefyrEditor>
       selectionColor: selectionColor,
       showSelectionHandles: showSelectionHandles,
       selectionControls: textSelectionControls,
+      topWidgets: widget.topWidgets ?? [],
+      bottomWidgets: widget.bottomWidgets ?? [],
     );
 
     return _selectionGestureDetectorBuilder.buildGestureDetector(
@@ -502,6 +509,8 @@ class RawEditor extends StatefulWidget {
     this.onLaunchUrl,
     required this.selectionColor,
     this.scrollPhysics,
+    this.bottomWidgets = const [],
+    this.topWidgets = const [],
     this.toolbarOptions = const ToolbarOptions(
       copy: true,
       cut: true,
@@ -668,6 +677,8 @@ class RawEditor extends StatefulWidget {
   ///
   /// Defaults to [defaultZefyrEmbedBuilder].
   final ZefyrEmbedBuilder embedBuilder;
+  final List<Widget> topWidgets;
+  final List<Widget> bottomWidgets;
 
   bool get selectionEnabled => enableInteractiveSelection;
 
@@ -1132,10 +1143,12 @@ class RawEditorState extends EditorState
         child: SingleChildScrollView(
           controller: _scrollController,
           physics: widget.scrollPhysics,
-          child: Stack(
+          child: Column(
             children: [
+              ...widget.topWidgets,
               SizedBox(height: widget.scrollAreaMinHeight),
               child,
+              ...widget.bottomWidgets
             ],
           ),
         ),
