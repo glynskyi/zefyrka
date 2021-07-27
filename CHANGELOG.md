@@ -1,3 +1,7 @@
+## 1.0.9
+
+* fixed the keyboard listener compatibility with the Flutter master branch
+
 ## 1.0.8
 
 * fixed the selection with handles on the desktop
