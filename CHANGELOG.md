@@ -1,3 +1,7 @@
+## 1.0.10
+
+* fixed the missed focus node issue #22
+
 ## 1.0.9
 
 * fixed the keyboard listener compatibility with the Flutter master branch

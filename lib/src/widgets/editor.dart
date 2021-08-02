@@ -310,7 +310,7 @@ class _ZefyrEditorState extends State<ZefyrEditor>
     final child = RawEditor(
       key: _editorKey,
       controller: widget.controller,
-      focusNode: widget.focusNode!,
+      focusNode: widget.focusNode ?? FocusNode(),
       scrollController: widget.scrollController,
       clipboardController: widget.clipboardController,
       scrollable: widget.scrollable,
