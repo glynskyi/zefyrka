@@ -13,7 +13,7 @@ import 'package:zefyrka/src/widgets/baseline_proxy.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 import '../rendering/editor.dart';
-import '../services/keyboard.dart';
+import '../services/keyboard.dart' as keyboard;
 import 'controller.dart';
 import 'cursor.dart';
 import 'editable_text_block.dart';
@@ -315,7 +315,7 @@ class _ZefyrEditorState extends State<ZefyrEditor>
     final child = RawEditor(
       key: _editorKey,
       controller: widget.controller,
-      focusNode: widget.focusNode!,
+      focusNode: widget.focusNode ?? FocusNode(),
       scrollController: widget.scrollController,
       clipboardController: widget.clipboardController,
       scrollable: widget.scrollable,
@@ -749,7 +749,7 @@ class RawEditorState extends EditorState
   FloatingCursorController? _floatingCursorController;
 
   // Keyboard
-  late KeyboardListener _keyboardListener;
+  late keyboard.KeyboardListener _keyboardListener;
 
   // Selection overlay
   @override
@@ -852,7 +852,7 @@ class RawEditorState extends EditorState
     );
 
     // Keyboard
-    _keyboardListener = KeyboardListener(
+    _keyboardListener = keyboard.KeyboardListener(
       onCursorMovement: handleCursorMovement,
       onShortcut: handleShortcut,
       onDelete: handleDelete,
