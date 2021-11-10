@@ -173,6 +173,14 @@ class RenderEditableTextLine extends RenderEditableBox {
           hitTest: (result, position) {
             return _leading!.hitTest(result, position: position);
           });
+    } else if (body != null) {
+      final parentData = body!.parentData as BoxParentData;
+      return result.addWithPaintOffset(
+          offset: parentData.offset,
+          position: position,
+          hitTest: (BoxHitTestResult result, Offset position) {
+            return body!.hitTest(result, position: position);
+          });
     } else {
       return true;
     }
