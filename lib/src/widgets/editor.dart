@@ -1275,7 +1275,7 @@ class RawEditorState extends EditorState
       return;
     }
     clipboardController.copy(widget.controller, plainText);
-    if (cause == SelectionChangedCause.toolbar) {
+    if (cause == SelectionChangedCause.toolBar) {
       bringIntoView(textEditingValue.selection.extent);
       hideToolbar();
     }
@@ -1285,7 +1285,7 @@ class RawEditorState extends EditorState
   void cutSelection(SelectionChangedCause cause) {
     final plainText = textEditingValue.text;
     clipboardController.cut(widget.controller, plainText);
-    if (cause == SelectionChangedCause.toolbar) {
+    if (cause == SelectionChangedCause.toolBar) {
       bringIntoView(textEditingValue.selection.extent);
       hideToolbar();
     }
@@ -1294,7 +1294,7 @@ class RawEditorState extends EditorState
   @override
   Future<void> pasteText(SelectionChangedCause cause) async {
     clipboardController.paste(widget.controller, textEditingValue);
-    if (cause == SelectionChangedCause.toolbar) {
+    if (cause == SelectionChangedCause.toolBar) {
       bringIntoView(textEditingValue.selection.extent);
       hideToolbar();
     }
@@ -1309,7 +1309,7 @@ class RawEditorState extends EditorState
       ),
       cause,
     );
-    if (cause == SelectionChangedCause.toolbar) {
+    if (cause == SelectionChangedCause.toolBar) {
       bringIntoView(textEditingValue.selection.extent);
     }
   }
