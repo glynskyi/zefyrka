@@ -95,7 +95,8 @@ class KeyboardListener {
         keysPressed.difference(_interestingKeys).isNotEmpty) {
       // If the most recently pressed key isn't a non-modifier key, or more than
       // one non-modifier key is down, or keys other than the ones we're interested in
-      // are pressed, just ignore the keypress.
+      // are pressed, ignore it here and let it propagate to other key event handlers
+      // (so an app-wide keyboard shortcut can be handled appropriately, for example).
       return KeyEventResult.ignored;
     }
 
