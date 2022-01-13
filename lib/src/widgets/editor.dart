@@ -1313,6 +1313,16 @@ class RawEditorState extends EditorState
       bringIntoView(textEditingValue.selection.extent);
     }
   }
+
+  @override
+  void insertTextPlaceholder(Size size) {
+    // TODO: implement insertTextPlaceholder
+  }
+
+  @override
+  void removeTextPlaceholder() {
+    // TODO: implement removeTextPlaceholder
+  }
 }
 
 class _Editor extends MultiChildRenderObjectWidget {

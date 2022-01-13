@@ -1,3 +1,7 @@
+## 1.2.0
+
+* added support for the `*TextPlaceholder` methods in the `TextInput` interface
+
 ## 1.1.1
 
 * allowed shortcut handling (thanks to @jason-downs)

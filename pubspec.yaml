@@ -1,6 +1,6 @@
 name: zefyrka
 description: Clean, minimalistic and collaboration-ready rich text editor for Flutter based on Zefyr package.
-version: 1.1.1
+version: 1.2.0-dev.1
 homepage: https://github.com/glynskyi/zefyrka
 
 environment:
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   collection: ^1.15.0
-  url_launcher: ^6.0.17
+  url_launcher: ^6.0.18
   quill_format: ^1.0.2
   notus_format: ^1.0.3
   characters: ^1.2.0
