@@ -225,7 +225,10 @@ mixin RawEditorStateTextInputClientMixin on EditorState
       SchedulerBinding.instance!.addPostFrameCallback((Duration _) {
         final size = renderEditor.size;
         final transform = renderEditor.getTransformTo(null);
-        _textInputConnection!.setEditableSizeAndTransform(size, transform);
+        if (hasConnection) {
+          // causes error if connection is lost before post-frame callback executes
+          _textInputConnection!.setEditableSizeAndTransform(size, transform);
+        }
       });
     }
   }
