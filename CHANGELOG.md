@@ -1,3 +1,11 @@
+## 1.1.1
+
+* allowed shortcut handling (thanks to @jason-downs)
+
+## 1.1.0
+
+* aligned with Flutter 2.8 release
+
 ## 1.0.10
 
 * fixed the missed focus node issue #22

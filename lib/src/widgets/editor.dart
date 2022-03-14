@@ -1279,6 +1279,53 @@ class RawEditorState extends EditorState
       TextEditingValue value, SelectionChangedCause cause) {
     textEditingValue = value;
   }
+
+  @override
+  void copySelection(SelectionChangedCause cause) {
+    final selection = textEditingValue.selection;
+    final plainText = textEditingValue.text;
+    if (selection.isCollapsed) {
+      return;
+    }
+    clipboardController.copy(widget.controller, plainText);
+    if (cause == SelectionChangedCause.toolbar) {
+      bringIntoView(textEditingValue.selection.extent);
+      hideToolbar();
+    }
+  }
+
+  @override
+  void cutSelection(SelectionChangedCause cause) {
+    final plainText = textEditingValue.text;
+    clipboardController.cut(widget.controller, plainText);
+    if (cause == SelectionChangedCause.toolbar) {
+      bringIntoView(textEditingValue.selection.extent);
+      hideToolbar();
+    }
+  }
+
+  @override
+  Future<void> pasteText(SelectionChangedCause cause) async {
+    clipboardController.paste(widget.controller, textEditingValue);
+    if (cause == SelectionChangedCause.toolbar) {
+      bringIntoView(textEditingValue.selection.extent);
+      hideToolbar();
+    }
+  }
+
+  @override
+  void selectAll(SelectionChangedCause cause) {
+    userUpdateTextEditingValue(
+      textEditingValue.copyWith(
+        selection: TextSelection(
+            baseOffset: 0, extentOffset: textEditingValue.text.length),
+      ),
+      cause,
+    );
+    if (cause == SelectionChangedCause.toolbar) {
+      bringIntoView(textEditingValue.selection.extent);
+    }
+  }
 }
 
 class _Editor extends MultiChildRenderObjectWidget {
