@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quill_format/quill_format.dart';
+import 'package:zefyrka/notus_format/notus_format.dart';
+import 'package:zefyrka/quill_format/quill_format.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 void main() {

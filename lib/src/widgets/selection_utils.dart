@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/notus_format.dart';
 
 /// Returns `true` if `node` intersects with `selection`.
 ///

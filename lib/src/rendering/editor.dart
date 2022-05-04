@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/src/document.dart';
 
 import '../widgets/selection_utils.dart';
 import 'editable_box.dart';

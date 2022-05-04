@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/src/document/line.dart';
 
 import '../widgets/cursor.dart';
 import '../widgets/selection_utils.dart';

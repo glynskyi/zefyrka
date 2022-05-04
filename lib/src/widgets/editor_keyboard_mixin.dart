@@ -5,7 +5,7 @@ import 'dart:ui';
 
 import 'package:characters/characters.dart';
 import 'package:flutter/services.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/src/document.dart';
 import 'package:zefyrka/src/services/clipboard_controller.dart';
 
 import '../services/keyboard.dart';

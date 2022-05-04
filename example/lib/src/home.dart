@@ -4,8 +4,8 @@ import 'package:example/src/read_only_view.dart';
 import 'package:file/local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zefyrka/notus_format/src/document.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 import 'forms_decorated_field.dart';
@@ -75,7 +75,6 @@ class _HomePageState extends State<HomePage> {
           centerTitle: false,
           title: Text(
             'Zefyr',
-            style: GoogleFonts.fondamento(color: Colors.white),
           ),
           actions: [
             IconButton(

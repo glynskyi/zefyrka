@@ -1,9 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/src/document/node.dart';
 
 /// A common interface to render boxes which represent a piece of rich text
 /// content.

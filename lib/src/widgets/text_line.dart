@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/notus_format.dart';
 
 import 'editable_text_line.dart';
 import 'editor.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/notus_format.dart';
 
 import 'controller.dart';
 

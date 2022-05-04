@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zefyrka/notus_format/src/document.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 class ZefyrLogo extends StatelessWidget {

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/notus_format/notus_format.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 import '../rendering/editable_text_block.dart';
-import 'cursor.dart';
 import 'editable_text_line.dart';
-import 'editor.dart';
-import 'text_line.dart';
-import 'theme.dart';
 
 typedef CheckboxListener = void Function(int documentOffset, bool checked);
 
