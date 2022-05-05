@@ -3,7 +3,7 @@ library zefyr.util;
 
 import 'dart:math' as math;
 
-import 'package:zefyrka/quill_format/quill_format.dart';
+import 'package:zefyrka/quill_format/src/quill_delta.dart';
 
 export 'src/fast_diff.dart';
 

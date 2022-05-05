@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zefyrka/quill_format/quill_format.dart';
+import 'package:zefyrka/quill_format/src/quill_delta.dart';
 import 'package:zefyrka/util.dart';
 
 void main() {

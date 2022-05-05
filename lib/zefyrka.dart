@@ -13,3 +13,17 @@ export 'src/widgets/editor_toolbar.dart';
 export 'src/widgets/field.dart';
 export 'src/widgets/text_line.dart';
 export 'src/widgets/theme.dart';
+
+export 'package:zefyrka/quill_format/src/quill_delta.dart';
+
+export 'package:zefyrka/notus_format/src/document.dart';
+export 'package:zefyrka/notus_format/src/document/attributes.dart';
+export 'package:zefyrka/notus_format/src/document/block.dart';
+export 'package:zefyrka/notus_format/src/document/embeds.dart';
+export 'package:zefyrka/notus_format/src/document/leaf.dart';
+export 'package:zefyrka/notus_format/src/document/line.dart';
+export 'package:zefyrka/notus_format/src/document/node.dart';
+export 'package:zefyrka/notus_format/src/heuristics.dart';
+export 'package:zefyrka/notus_format/src/heuristics/delete_rules.dart';
+export 'package:zefyrka/notus_format/src/heuristics/format_rules.dart';
+export 'package:zefyrka/notus_format/src/heuristics/insert_rules.dart';

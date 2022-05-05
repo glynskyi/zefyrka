@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zefyrka/notus_format/notus_format.dart';
 import 'package:zefyrka/src/widgets/baseline_proxy.dart';
 import 'package:zefyrka/zefyrka.dart';
 

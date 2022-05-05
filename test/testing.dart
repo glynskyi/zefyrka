@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zefyrka/notus_format/notus_format.dart';
-import 'package:zefyrka/quill_format/quill_format.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 var delta = Delta()..insert('This House Is A Circus\n');

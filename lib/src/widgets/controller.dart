@@ -1,9 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:zefyrka/notus_format/notus_format.dart';
-import 'package:zefyrka/quill_format/quill_format.dart';
 import 'package:zefyrka/util.dart';
+import 'package:zefyrka/zefyrka.dart';
 
 /// List of style keys which can be toggled for insertion
 List<String> _insertionToggleableStyleKeys = [
