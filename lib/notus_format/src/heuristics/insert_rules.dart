@@ -273,7 +273,7 @@ class PreserveInlineStylesRule extends InsertRule {
 }
 
 /// Applies link format to text segment (which looks like a link) when user
-/// inserts space character after it.
+/// inserts space or new line character after it.
 class AutoFormatLinksRule extends InsertRule {
   const AutoFormatLinksRule();
 
@@ -281,10 +281,10 @@ class AutoFormatLinksRule extends InsertRule {
   Delta? apply(Delta document, int index, Object data) {
     if (data is! String) return null;
 
-    // This rule applies to a space inserted after a link, so we can ignore
+    // This rule applies to a space or a new line inserted after a link, so we can ignore
     // everything else.
     final text = data;
-    if (text != ' ') return null;
+    if (text != ' ' || text != '\n') return null;
 
     final iter = DeltaIterator(document);
     final previous = iter.skip(index);
@@ -297,7 +297,7 @@ class AutoFormatLinksRule extends InsertRule {
     final candidate = previousText.split('\n').last.split(' ').last;
     try {
       final link = Uri.parse(candidate);
-      if (!['https', 'http'].contains(link.scheme)) {
+      if (!['https', 'http'].contains(link.scheme) || link.path.substring(0, 3).toLowerCase() == 'www') {
         // TODO: might need a more robust way of validating links here.
         return null;
       }
