@@ -284,7 +284,7 @@ class AutoFormatLinksRule extends InsertRule {
     // This rule applies to a space or a new line inserted after a link, so we can ignore
     // everything else.
     final text = data;
-    if (text != ' ' || text != '\n') return null;
+    if (text != ' ' && text != '\n') return null;
 
     final iter = DeltaIterator(document);
     final previous = iter.skip(index);
