@@ -238,7 +238,7 @@ abstract class ContainerNode<T extends Node> extends Node {
       node.insert(index, data, style);
     } else {
       final result = lookup(index);
-      result.node!.insert(result.offset, data, style);
+      result.node?.insert(result.offset, data, style);
     }
   }
 
