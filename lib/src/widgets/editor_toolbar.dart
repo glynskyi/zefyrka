@@ -37,6 +37,37 @@ class InsertEmbedButton extends StatelessWidget {
   }
 }
 
+class ShowRawDocumentButton extends StatelessWidget {
+  final ZefyrController controller;
+
+  const ShowRawDocumentButton({
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.all(24),
+            child: Text(
+              controller.document.toJson().toString(),
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+        },
+      ),
+      child: Container(
+        width: 24,
+        height: 24,
+        color: Colors.green,
+      ),
+    );
+  }
+}
+
 /// Toolbar button for formatting text as a link.
 class LinkStyleButton extends StatefulWidget {
   final ZefyrController controller;
@@ -401,6 +432,9 @@ class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
       bool hideLink = false,
       bool hideHorizontalRule = false}) {
     return ZefyrToolbar(key: key, children: [
+      ShowRawDocumentButton(
+        controller: controller,
+      ),
       Visibility(
         visible: !hideBoldButton,
         child: ToggleStyleButton(
