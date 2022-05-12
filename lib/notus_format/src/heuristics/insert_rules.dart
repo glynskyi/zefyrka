@@ -272,6 +272,53 @@ class PreserveInlineStylesRule extends InsertRule {
   }
 }
 
+class FormatLinksOnSplitRule extends InsertRule {
+  const FormatLinksOnSplitRule();
+
+  @override
+  Delta? apply(Delta document, int index, Object data) {
+    // We need to update link parts when it is split by space or \n character
+    if (data != '\n' && data != ' '){
+      return null;
+    }
+
+    final iter = DeltaIterator(document);
+    final previous = iter.skip(index);
+
+    if (previous == null) {
+      return null;
+    }
+
+    final previousText = previous.data is String ? (previous.data as String?)! : '';
+    if (previousText.contains('\n')) {
+      return null;
+    }
+
+    final attributes = previous.attributes;
+    final hasLink = attributes?.containsKey(NotusAttribute.link.key) ?? false;
+    if (!hasLink) {
+      return null;
+    }
+
+    final next = iter.next();
+
+    if (previousText == previous.attributes?[NotusAttribute.link.key]) {
+      return null;
+    }
+
+    var result = Delta()
+      ..retain(index - previousText.length)
+      ..retain(previousText.length, previous.attributes?..[NotusAttribute.link.key] = previousText)
+      ..insert(data);
+
+    if (next.isInsert && next.hasAttribute(NotusAttribute.link.key)) {
+      result.retain(next.data.toString().length, NotusAttribute.link.unset.toJson());
+    }
+
+    return result;
+  }
+}
+
 /// Applies link format to text segment (which looks like a link) when user
 /// inserts space or new line character after it.
 class AutoFormatLinksRule extends InsertRule {
@@ -279,17 +326,20 @@ class AutoFormatLinksRule extends InsertRule {
 
   @override
   Delta? apply(Delta document, int index, Object data) {
-    if (data is! String) return null;
-
     // This rule applies to a space or a new line inserted after a link, so we can ignore
     // everything else.
     final text = data;
-    if (text != ' ' && text != '\n') return null;
+    if (text != ' ' && text != '\n') {
+      return null;
+    }
 
     final iter = DeltaIterator(document);
     final previous = iter.skip(index);
+
     // No previous operation means nothing to analyze.
-    if (previous == null || previous.data is! String) return null;
+    if (previous == null || previous.data is! String) {
+      return null;
+    }
     final previousText = previous.data as String;
 
     // Split text of previous operation in lines and words and take the last
@@ -297,7 +347,7 @@ class AutoFormatLinksRule extends InsertRule {
     final candidate = previousText.split('\n').last.split(' ').last;
     try {
       final link = Uri.parse(candidate);
-      var isWww = link.path.substring(0, 3).toLowerCase() == 'www';
+      var isWww = link.path.length > 3 && link.path.substring(0, 3).toLowerCase() == 'www';
       if (!['https', 'http'].contains(link.scheme) && !isWww) {
         // TODO: might need a more robust way of validating links here.
         return null;
