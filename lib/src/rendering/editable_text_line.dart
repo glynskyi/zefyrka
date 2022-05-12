@@ -479,7 +479,7 @@ class RenderEditableTextLine extends RenderEditableBox {
       case TargetPlatform.linux:
       case TargetPlatform.windows:
         _caretPrototype = Rect.fromLTWH(0.0, _kCursorHeightOffset, cursorWidth,
-            cursorHeight - 2.0 * _kCursorHeightOffset);
+            cursorHeight - 1.0 * _kCursorHeightOffset);
         break;
     }
   }
