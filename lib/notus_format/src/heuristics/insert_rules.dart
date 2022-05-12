@@ -297,7 +297,8 @@ class AutoFormatLinksRule extends InsertRule {
     final candidate = previousText.split('\n').last.split(' ').last;
     try {
       final link = Uri.parse(candidate);
-      if (!['https', 'http'].contains(link.scheme) || link.path.substring(0, 3).toLowerCase() == 'www') {
+      var isWww = link.path.substring(0, 3).toLowerCase() == 'www';
+      if (!['https', 'http'].contains(link.scheme) && !isWww) {
         // TODO: might need a more robust way of validating links here.
         return null;
       }
@@ -306,8 +307,14 @@ class AutoFormatLinksRule extends InsertRule {
       // Do nothing if already formatted as link.
       if (attributes.containsKey(NotusAttribute.link.key)) return null;
 
-      attributes
-          .addAll(NotusAttribute.link.fromString(link.toString()).toJson());
+      var embeddedLink = link.toString();
+
+      if (isWww) {
+        embeddedLink = 'https://' + embeddedLink;
+      }
+
+      attributes.addAll(NotusAttribute.link.fromString(embeddedLink).toJson());
+
       return Delta()
         ..retain(index - candidate.length)
         ..retain(candidate.length, attributes)
