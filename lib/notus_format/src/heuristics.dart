@@ -21,6 +21,8 @@ class NotusHeuristics {
       // attributes.
     ],
     insertRules: [
+      FormatLinksOnSplitRule(),
+      AutoFormatLinksRule(),
       // Embeds
       InsertEmbedsRule(),
       ForceNewlineForInsertsAroundEmbedRule(),
@@ -31,7 +33,6 @@ class NotusHeuristics {
       PreserveLineStyleOnSplitRule(),
       ResetLineFormatOnNewLineRule(),
       // Inlines
-      AutoFormatLinksRule(),
       PreserveInlineStylesRule(),
       // Catch-all
       CatchAllInsertRule(),
