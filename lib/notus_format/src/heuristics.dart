@@ -21,6 +21,7 @@ class NotusHeuristics {
       // attributes.
     ],
     insertRules: [
+      FormatLinksFromClipboard(),
       FormatLinksOnSplitRule(),
       AutoFormatLinksRule(),
       // Embeds

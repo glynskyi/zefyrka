@@ -273,6 +273,42 @@ class PreserveInlineStylesRule extends InsertRule {
   }
 }
 
+class FormatLinksFromClipboard extends InsertRule {
+  const FormatLinksFromClipboard();
+
+  @override
+  Delta? apply(Delta document, int index, Object data) {
+    if (data is! String || data.length < 4) {
+      return null;
+    }
+
+    var inputItemMap = {};
+    var inputItems = data.split('\n').join(' ').split(' ').where((element) => element != '');
+    var offset = 0;
+
+    for (var item in inputItems) {
+      var index = data.indexOf(item, offset);
+      offset += item.length;
+      inputItemMap[index] = item;
+    }
+
+    var change = Delta()..retain(index);
+    
+    var indexList = inputItemMap.keys.toList()..sort();
+    var previousStartIndex = 0;
+    var attributes;
+
+    for (var index in indexList) {
+      attributes = Uri.tryParse(inputItemMap[index])?.isValid == true ? {NotusAttribute.link.key: inputItemMap[index]} : null;
+      change.insert(data.substring(previousStartIndex, index));
+      previousStartIndex = index + inputItemMap[index].length;
+      change.insert(data.substring(index, index + inputItemMap[index].length), attributes);
+    }
+
+    return change;
+  }
+}
+
 class FormatLinksOnSplitRule extends InsertRule {
   const FormatLinksOnSplitRule();
 
