@@ -35,3 +35,14 @@ int getPositionDelta(Delta user, Delta actual) {
   }
   return diff;
 }
+
+extension LinkValidation on Uri {
+  bool get isWww => path.length > 3 && path.substring(0, 3).toLowerCase() == 'www';
+
+  bool get hasValidScheme => ['https', 'http'].contains(scheme);
+
+  bool get isValid {
+    // TODO: might need a more robust way of validating links here.
+    return hasValidScheme || isWww;
+  }
+}

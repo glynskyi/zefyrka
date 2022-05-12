@@ -1,4 +1,5 @@
 import 'package:zefyrka/quill_format/src/quill_delta.dart';
+import 'package:zefyrka/util.dart';
 
 import '../document/attributes.dart';
 
@@ -306,9 +307,18 @@ class FormatLinksOnSplitRule extends InsertRule {
       return null;
     }
 
-    var result = Delta()
-      ..retain(index - previousText.length)
-      ..retain(previousText.length, previous.attributes?..[NotusAttribute.link.key] = previousText)
+    var result = Delta()..retain(index - previousText.length);
+
+    var linkAttributes;
+
+    if (Uri.tryParse(previousText)?.isValid == true) {
+      linkAttributes = previous.attributes?..[NotusAttribute.link.key] = previousText;
+    } else {
+      linkAttributes = NotusAttribute.link.unset.toJson();
+    }
+
+    result
+      ..retain(previousText.length, linkAttributes)
       ..insert(data);
 
     if (next.isInsert && next.hasAttribute(NotusAttribute.link.key)) {
@@ -347,9 +357,7 @@ class AutoFormatLinksRule extends InsertRule {
     final candidate = previousText.split('\n').last.split(' ').last;
     try {
       final link = Uri.parse(candidate);
-      var isWww = link.path.length > 3 && link.path.substring(0, 3).toLowerCase() == 'www';
-      if (!['https', 'http'].contains(link.scheme) && !isWww) {
-        // TODO: might need a more robust way of validating links here.
+      if (!link.hasValidScheme && !link.isWww) {
         return null;
       }
       final attributes = previous.attributes ?? <String, dynamic>{};
@@ -359,7 +367,7 @@ class AutoFormatLinksRule extends InsertRule {
 
       var embeddedLink = link.toString();
 
-      if (isWww) {
+      if (link.isWww) {
         embeddedLink = 'https://' + embeddedLink;
       }
 
