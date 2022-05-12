@@ -253,7 +253,7 @@ abstract class ContainerNode<T extends Node> extends Node {
   void delete(int index, int? length) {
     assert(isNotEmpty);
     final res = lookup(index);
-    res.node!.delete(res.offset, length);
+    res.node?.delete(res.offset, length);
   }
 
   @override

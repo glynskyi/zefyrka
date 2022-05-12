@@ -604,7 +604,7 @@ class DeltaIterator {
   ///
   /// Optional [length] specifies maximum length of operation to return. Note
   /// that actual length of returned operation may be less than specified value.
-  Operation next([num length = double.infinity]) {
+  Operation next([num length = double.maxFinite]) {
     if (_modificationCount != delta._modificationCount) {
       throw ConcurrentModificationError(delta);
     }

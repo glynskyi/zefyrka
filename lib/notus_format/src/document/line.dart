@@ -287,7 +287,9 @@ class LineNode extends ContainerNode<LeafNode>
 
       // nextLine might have been unmounted since last assert so we need to
       // check again we still have a line after us.
-      assert(nextLine != null);
+      if (nextLine == null) {
+        return;
+      }
 
       // Move remaining children in this line to the next line so that all
       // attributes of nextLine are preserved.
