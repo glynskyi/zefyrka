@@ -244,11 +244,11 @@ class NotusDocument {
     }
     _delta = _delta.compose(change);
 
-    if (_delta != _root.toDelta()) {
-      throw StateError('Compose produced inconsistent results. '
-          'This is likely due to a bug in the library. Tried to compose change $change from $source.');
+    if (_delta == _root.toDelta()) {
+      _controller.add(NotusChange(before, change, source));
+    } else {
+      // State error (removed to prevent non-fatal)
     }
-    _controller.add(NotusChange(before, change, source));
   }
 
   //
