@@ -1053,6 +1053,14 @@ class RawEditorState extends EditorState
     SchedulerBinding.instance!.addPostFrameCallback((Duration _) {
       _showCaretOnScreenScheduled = false;
 
+      RenderEditor renderEditor;
+
+      try {
+        renderEditor = this.renderEditor;
+      } catch (_) {
+        return;
+      }
+      
       final viewport = RenderAbstractViewport.of(renderEditor)!;
       final editorOffset =
           renderEditor.localToGlobal(Offset(0.0, 0.0), ancestor: viewport);
