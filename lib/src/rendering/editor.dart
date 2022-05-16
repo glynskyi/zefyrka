@@ -562,9 +562,13 @@ class RenderEditor extends RenderEditableContainerBox
 
   @override
   double preferredLineHeight(TextPosition position) {
-    final child = childAtPosition(position);
-    final localPosition =
-        TextPosition(offset: position.offset - child.node.offset);
+    RenderEditableBox child;
+    try {
+      child = childAtPosition(position);
+    } catch (_) {
+      return 20.0;
+    }
+    final localPosition = TextPosition(offset: position.offset - child.node.offset);
     return child.preferredLineHeight(localPosition);
   }
 
