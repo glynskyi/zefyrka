@@ -958,9 +958,11 @@ class RawEditorState extends EditorState
         (Duration _) => _updateOrDisposeSelectionOverlayIfNeeded());
 //    _textChangedSinceLastCaretUpdate = true;
 
-    setState(() {
-      /* We use widget.controller.value in build(). */
-    });
+    if (mounted) {
+      setState(() {
+        /* We use widget.controller.value in build(). */
+      });
+    }
   }
 
   void _handleSelectionChanged(
@@ -1015,7 +1017,7 @@ class RawEditorState extends EditorState
       _selectionOverlay?.hide();
       _selectionOverlay = null;
 
-      if (widget.selectionControls != null) {
+      if (widget.selectionControls != null && mounted) {
         _selectionOverlay = EditorTextSelectionOverlay(
           clipboardStatus: _clipboardStatus,
           context: context,
