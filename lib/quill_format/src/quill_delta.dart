@@ -629,7 +629,7 @@ class DeltaIterator {
       final opActualLength = opIsNotEmpty ? opLength : actualLength as int;
       return Operation._(opKey, opActualLength, opData, opAttributes);
     }
-    return Operation.retain(length as int);
+    return Operation.retain(length.toInt());
   }
 
   /// Skips [length] characters in source delta.
