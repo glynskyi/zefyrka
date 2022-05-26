@@ -283,13 +283,14 @@ class FormatLinksFromClipboard extends InsertRule {
     }
 
     var inputItemMap = {};
-    var inputItems = data.split('\n').join(' ').split(' ').where((element) => element != '');
+    var inputItems = data.trim().split(RegExp(r'\s+'));
+    var whiteSpaces = data.replaceAllMapped(RegExp(r'[^\s+]'), (_) => '*');
     var offset = 0;
 
     for (var item in inputItems) {
-      var index = data.indexOf(item, offset);
+      offset = whiteSpaces.indexOf('*', offset);
+      inputItemMap[offset] = item;
       offset += item.length;
-      inputItemMap[index] = item;
     }
 
     var change = Delta()..retain(index);
