@@ -35,7 +35,7 @@ class _ReadOnlyViewState extends State<ReadOnlyView> {
           border: Border.all(color: Colors.grey.shade200),
         ),
         child: ZefyrEditor(
-          controller: controller,
+          controller: [controller],
           focusNode: _focusNode,
           autofocus: true,
           expands: true,

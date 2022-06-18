@@ -43,7 +43,7 @@ class _ScrollableLayoutState extends State<ScrollableLayout> {
             ),
             Divider(),
             ZefyrEditor(
-              controller: controller,
+              controller: [controller],
               focusNode: _focusNode,
               scrollController: _scrollController,
               scrollable: false,

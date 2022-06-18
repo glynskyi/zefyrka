@@ -74,7 +74,7 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
       ),
       body: ZefyrField(
         padding: EdgeInsets.all(16),
-        controller: _controller,
+        controller: [_controller],
         focusNode: _focusNode,
         readOnly: !_editing,
         onLaunchUrl: _launchUrl,

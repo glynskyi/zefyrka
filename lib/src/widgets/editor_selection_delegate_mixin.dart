@@ -8,13 +8,15 @@ mixin RawEditorStateSelectionDelegateMixin on EditorState
     implements TextSelectionDelegate {
   @override
   TextEditingValue get textEditingValue {
-    return widget.controller.plainTextEditingValue;
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    return widget.controller[0].plainTextEditingValue;
   }
 
   @override
   set textEditingValue(TextEditingValue value) {
     if (value.text == textEditingValue.text) {
-      widget.controller
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      widget.controller[0]
           .updateSelection(value.selection, source: ChangeSource.local);
     } else {
       _setEditingValue(value);
@@ -23,7 +25,8 @@ mixin RawEditorStateSelectionDelegateMixin on EditorState
 
   void _setEditingValue(TextEditingValue value) async {
     if (await _isItCut(value)) {
-      widget.controller.replaceText(
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      widget.controller[0].replaceText(
         textEditingValue.selection.start,
         textEditingValue.text.length - value.text.length,
         '',
@@ -35,7 +38,8 @@ mixin RawEditorStateSelectionDelegateMixin on EditorState
       if (data != null) {
         final length =
             textEditingValue.selection.end - textEditingValue.selection.start;
-        widget.controller.replaceText(
+        // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+        widget.controller[0].replaceText(
           value.selection.start,
           length,
           data.text,

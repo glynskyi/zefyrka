@@ -40,7 +40,7 @@ class _ExpandedLayoutState extends State<ExpandedLayout> {
           border: Border.all(color: Colors.grey.shade200),
         ),
         child: ZefyrEditor(
-          controller: controller,
+          controller: [controller],
           focusNode: _focusNode,
           autofocus: true,
           expands: _expands,

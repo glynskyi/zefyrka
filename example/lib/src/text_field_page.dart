@@ -57,7 +57,7 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
             border: Border.all(color: Colors.grey.shade400, width: 0),
           ),
           child: ZefyrField(
-            controller: _controller,
+            controller: [_controller],
             focusNode: _focusNode,
             autofocus: true,
             // readOnly: true,
