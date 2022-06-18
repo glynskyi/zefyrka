@@ -29,7 +29,7 @@ class _DecoratedFieldDemoState extends State<DecoratedFieldDemo> {
             decoration: InputDecoration(labelText: 'Title'),
           ),
           ZefyrField(
-            controller: controller,
+            controller: [controller],
             focusNode: _focusNode,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(top: 8.0),

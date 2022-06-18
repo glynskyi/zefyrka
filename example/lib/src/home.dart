@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             child: ZefyrEditor(
-              controller: _controller!,
+              controller: [_controller!],
               focusNode: _focusNode,
               autofocus: true,
               // readOnly: true,

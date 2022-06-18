@@ -145,9 +145,11 @@ mixin RawEditorStateKeyboardMixin on EditorState {
       // If both modifiers are down, nothing happens on any of the platforms.
       return;
     }
-    final selection = widget.controller.selection;
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    final selection = widget.controller[0].selection;
 
-    TextSelection newSelection = widget.controller.selection;
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    TextSelection newSelection = widget.controller[0].selection;
 
     final plainText = textEditingValue.text;
 
@@ -317,7 +319,9 @@ mixin RawEditorStateKeyboardMixin on EditorState {
           TextSelection.fromPosition(TextPosition(offset: newOffset));
     }
 
-    widget.controller.updateSelection(newSelection, source: ChangeSource.local);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    widget.controller[0]
+        .updateSelection(newSelection, source: ChangeSource.local);
   }
 
   // Handles shortcut functionality including cut, copy, paste and select all
@@ -328,12 +332,14 @@ mixin RawEditorStateKeyboardMixin on EditorState {
     final plainText = textEditingValue.text;
     // assert(selection != null);
     if (shortcut == InputShortcut.copy) {
-      clipboardController.copy(widget.controller, plainText);
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      clipboardController.copy(widget.controller[0], plainText);
       return;
     }
     if (shortcut == InputShortcut.cut && !widget.readOnly) {
       final updatedEditingValue =
-          clipboardController.cut(widget.controller, plainText);
+          // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+          clipboardController.cut(widget.controller[0], plainText);
       if (updatedEditingValue != null) {
         textEditingValue = updatedEditingValue;
       }
@@ -342,22 +348,26 @@ mixin RawEditorStateKeyboardMixin on EditorState {
     if (shortcut == InputShortcut.paste && !widget.readOnly) {
       // Snapshot the input before using `await`.
       // See https://github.com/flutter/flutter/issues/11427
-      clipboardController.paste(widget.controller, textEditingValue);
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      clipboardController.paste(widget.controller[0], textEditingValue);
       return;
     }
     if (shortcut == InputShortcut.selectAll &&
         widget.enableInteractiveSelection) {
-      final newSelection = widget.controller.selection.copyWith(
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      final newSelection = widget.controller[0].selection.copyWith(
         baseOffset: 0,
         extentOffset: textEditingValue.text.length,
       );
-      widget.controller.updateSelection(newSelection);
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      widget.controller[0].updateSelection(newSelection);
       return;
     }
   }
 
   void handleDelete(bool forward) {
-    final selection = widget.controller.selection;
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    final selection = widget.controller[0].selection;
     final plainText = textEditingValue.text;
     int cursorPosition = selection.start;
     String textBefore = selection.textBefore(plainText);
@@ -379,7 +389,8 @@ mixin RawEditorStateKeyboardMixin on EditorState {
     var newSelection = TextSelection.collapsed(offset: cursorPosition);
     var newText = textBefore + textAfter;
     var size = plainText.length - newText.length;
-    widget.controller.replaceText(
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    widget.controller[0].replaceText(
       cursorPosition,
       size,
       '',

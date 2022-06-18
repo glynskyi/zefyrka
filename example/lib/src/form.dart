@@ -59,7 +59,7 @@ class _FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
     return ZefyrField(
       // height: 200.0,
       // decoration: InputDecoration(labelText: 'Description'),
-      controller: _controller,
+      controller: [_controller],
       focusNode: _focusNode,
       autofocus: true,
       // physics: ClampingScrollPhysics(),

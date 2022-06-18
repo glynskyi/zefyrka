@@ -34,7 +34,7 @@ class EditorPageState extends State<EditorPage> {
         ? Center(child: CircularProgressIndicator())
         : ZefyrField(
             padding: EdgeInsets.all(16),
-            controller: _controller!,
+            controller: [_controller!],
             focusNode: _focusNode,
           );
 

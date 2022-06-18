@@ -29,7 +29,8 @@ mixin RawEditorStateTextInputClientMixin on EditorState
 
   void _remoteValueChanged(
       int start, String deleted, String inserted, TextSelection selection) {
-    widget.controller
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    widget.controller[0]
         .replaceText(start, deleted.length, inserted, selection: selection);
   }
 

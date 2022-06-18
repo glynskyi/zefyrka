@@ -54,7 +54,7 @@ class ZefyrEditor extends StatefulWidget {
   /// and this editor.
   ///
   /// Must not be null.
-  final ZefyrController controller;
+  final List<ZefyrController> controller;
 
   /// Controls whether this editor has keyboard focus.
   ///
@@ -309,7 +309,8 @@ class _ZefyrEditorState extends State<ZefyrEditor>
 
     final child = RawEditor(
       key: _editorKey,
-      controller: widget.controller,
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      controller: [widget.controller[0]],
       focusNode: widget.focusNode ?? FocusNode(),
       scrollController: widget.scrollController,
       clipboardController: widget.clipboardController,
@@ -400,7 +401,8 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
 
   void _launchUrlIfNeeded(TapUpDetails details) {
     final pos = renderEditor.getPositionForOffset(details.globalPosition);
-    final result = editor.widget.controller.document.lookupLine(pos.offset);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    final result = editor.widget.controller[0].document.lookupLine(pos.offset);
     if (result.node == null) return;
     final line = result.node as LineNode;
     final segmentResult = line.lookup(result.offset);
@@ -529,7 +531,7 @@ class RawEditor extends StatefulWidget {
         super(key: key);
 
   /// Controls the document being edited.
-  final ZefyrController controller;
+  final List<ZefyrController> controller;
 
   /// Controls whether this editor has keyboard focus.
   final FocusNode focusNode;
@@ -681,7 +683,8 @@ class RawEditor extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-        .add(DiagnosticsProperty<ZefyrController>('controller', controller));
+        // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+        .add(DiagnosticsProperty<ZefyrController>('controller', controller[0]));
     properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode));
     properties.add(DoubleProperty('maxLines', maxHeight, defaultValue: null));
     properties.add(DoubleProperty('minLines', minHeight, defaultValue: null));
@@ -823,7 +826,8 @@ class RawEditorState extends EditorState
 
     _clipboardStatus?.addListener(_onChangedClipboardStatus);
 
-    widget.controller.addListener(_didChangeTextEditingValue);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    widget.controller[0].addListener(_didChangeTextEditingValue);
 
     _scrollController = widget.scrollController ?? ScrollController();
     _scrollController!.addListener(_updateSelectionOverlayForScroll);
@@ -873,7 +877,8 @@ class RawEditorState extends EditorState
 
   bool _shouldShowSelectionHandles() {
     return widget.showSelectionHandles &&
-        !widget.controller.selection.isCollapsed;
+        // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+        !widget.controller[0].selection.isCollapsed;
   }
 
   @override
@@ -884,8 +889,10 @@ class RawEditorState extends EditorState
     _cursorController!.style = widget.cursorStyle!;
 
     if (widget.controller != oldWidget.controller) {
-      oldWidget.controller.removeListener(_didChangeTextEditingValue);
-      widget.controller.addListener(_didChangeTextEditingValue);
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      oldWidget.controller[0].removeListener(_didChangeTextEditingValue);
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      widget.controller[0].addListener(_didChangeTextEditingValue);
       updateRemoteValueIfNeeded();
     }
 
@@ -905,7 +912,8 @@ class RawEditorState extends EditorState
       updateKeepAlive();
     }
 
-    if (widget.controller.selection != oldWidget.controller.selection) {
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    if (widget.controller[0].selection != oldWidget.controller[0].selection) {
       _selectionOverlay?.update(textEditingValue);
     }
 
@@ -936,7 +944,8 @@ class RawEditorState extends EditorState
     assert(!hasConnection);
     _selectionOverlay?.dispose();
     _selectionOverlay = null;
-    widget.controller.removeListener(_didChangeTextEditingValue);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    widget.controller[0].removeListener(_didChangeTextEditingValue);
     widget.focusNode.removeListener(_handleFocusChanged);
     _focusAttachment!.detach();
     _cursorController!.dispose();
@@ -951,7 +960,9 @@ class RawEditorState extends EditorState
     _showCaretOnScreen();
     updateRemoteValueIfNeeded();
     _cursorController!
-        .startOrStopCursorTimerIfNeeded(_hasFocus, widget.controller.selection);
+        // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+        .startOrStopCursorTimerIfNeeded(
+            _hasFocus, widget.controller[0].selection);
     if (hasConnection) {
       // To keep the cursor from blinking while typing, we want to restart the
       // cursor timer every time a new character is typed.
@@ -976,7 +987,8 @@ class RawEditorState extends EditorState
 
   void _handleSelectionChanged(
       TextSelection selection, SelectionChangedCause cause) {
-    widget.controller.updateSelection(selection, source: ChangeSource.local);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    widget.controller[0].updateSelection(selection, source: ChangeSource.local);
 
     _selectionOverlay?.handlesVisible = _shouldShowSelectionHandles();
 
@@ -988,7 +1000,9 @@ class RawEditorState extends EditorState
   void _handleFocusChanged() {
     openOrCloseConnection();
     _cursorController!
-        .startOrStopCursorTimerIfNeeded(_hasFocus, widget.controller.selection);
+        // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+        .startOrStopCursorTimerIfNeeded(
+            _hasFocus, widget.controller[0].selection);
     SchedulerBinding.instance.addPostFrameCallback(
         (Duration _) => _updateOrDisposeSelectionOverlayIfNeeded());
     if (_hasFocus) {
@@ -1105,8 +1119,10 @@ class RawEditorState extends EditorState
 //            onPaste: _semanticsOnPaste(controls),
         child: _Editor(
           key: _editorKey,
-          document: widget.controller.document,
-          selection: widget.controller.selection,
+          // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+          document: widget.controller[0].document,
+          // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+          selection: widget.controller[0].selection,
           hasFocus: _hasFocus,
           textDirection: _textDirection,
           startHandleLayerLink: _startHandleLayerLink,
@@ -1163,7 +1179,8 @@ class RawEditorState extends EditorState
 
   List<Widget> _buildChildren(BuildContext context) {
     final result = <Widget>[];
-    for (final node in widget.controller.document.root.children) {
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    for (final node in widget.controller[0].document.root.children) {
       if (node is LineNode) {
         result.add(EditableTextLine(
           node: node,
@@ -1171,7 +1188,8 @@ class RawEditorState extends EditorState
           indentWidth: _getIndentWidth(node),
           spacing: _getSpacingForLine(node, _themeData),
           cursorController: _cursorController!,
-          selection: widget.controller.selection,
+          // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+          selection: widget.controller[0].selection,
           selectionColor: widget.selectionColor,
           enableInteractiveSelection: widget.enableInteractiveSelection,
           body: TextLine(
@@ -1190,7 +1208,8 @@ class RawEditorState extends EditorState
           textDirection: _textDirection,
           spacing: _getSpacingForBlock(node, _themeData),
           cursorController: _cursorController,
-          selection: widget.controller.selection,
+          // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+          selection: widget.controller[0].selection,
           selectionColor: widget.selectionColor,
           enableInteractiveSelection: widget.enableInteractiveSelection,
           hasFocus: _hasFocus,
@@ -1209,9 +1228,12 @@ class RawEditorState extends EditorState
 
   void _toggleCheckbox(int documentOffset, bool checked) {
     if (checked) {
-      widget.controller.formatText(documentOffset, 0, NotusAttribute.checked);
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      widget.controller[0]
+          .formatText(documentOffset, 0, NotusAttribute.checked);
     } else {
-      widget.controller
+      // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+      widget.controller[0]
           .formatText(documentOffset, 0, NotusAttribute.checked.unset);
     }
   }
@@ -1275,7 +1297,8 @@ class RawEditorState extends EditorState
     if (selection.isCollapsed) {
       return;
     }
-    clipboardController.copy(widget.controller, plainText);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    clipboardController.copy(widget.controller[0], plainText);
     if (cause == SelectionChangedCause.toolbar) {
       bringIntoView(textEditingValue.selection.extent);
       hideToolbar();
@@ -1285,7 +1308,8 @@ class RawEditorState extends EditorState
   @override
   void cutSelection(SelectionChangedCause cause) {
     final plainText = textEditingValue.text;
-    clipboardController.cut(widget.controller, plainText);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    clipboardController.cut(widget.controller[0], plainText);
     if (cause == SelectionChangedCause.toolbar) {
       bringIntoView(textEditingValue.selection.extent);
       hideToolbar();
@@ -1294,7 +1318,8 @@ class RawEditorState extends EditorState
 
   @override
   Future<void> pasteText(SelectionChangedCause cause) async {
-    clipboardController.paste(widget.controller, textEditingValue);
+    // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+    clipboardController.paste(widget.controller[0], textEditingValue);
     if (cause == SelectionChangedCause.toolbar) {
       bringIntoView(textEditingValue.selection.extent);
       hideToolbar();

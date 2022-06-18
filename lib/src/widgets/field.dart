@@ -9,7 +9,7 @@ class ZefyrField extends StatefulWidget {
   /// and this editor.
   ///
   /// Must not be null.
-  final ZefyrController controller;
+  final List<ZefyrController> controller;
 
   /// Controls whether this editor has keyboard focus.
   ///
@@ -229,13 +229,16 @@ class _ZefyrFieldState extends State<ZefyrField> {
 
     return AnimatedBuilder(
       animation:
-          Listenable.merge(<Listenable?>[widget.focusNode, widget.controller]),
+          // TODO: --------------------------------------- 暂时是list中的下标为0的元素
+          Listenable.merge(
+              <Listenable?>[widget.focusNode, widget.controller[0]]),
       builder: (BuildContext context, Widget? child) {
         return InputDecorator(
           decoration: _getEffectiveDecoration(),
           isFocused: widget.focusNode!.hasFocus,
           // TODO: Document should be considered empty of it has single empty line with no styles applied
-          isEmpty: widget.controller.document.length == 1,
+          // TODO ---------------------------------------  暂时是list中的下标为0的元素
+          isEmpty: widget.controller[0].document.length == 1,
           child: child,
         );
       },
