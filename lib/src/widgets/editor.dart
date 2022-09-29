@@ -1316,6 +1316,11 @@ class RawEditorState extends EditorState
   }
 
   @override
+  void performSelector(String selectorName) {
+    // TODO: implement performSelector
+  }
+
+  @override
   void insertTextPlaceholder(Size size) {
     // TODO: implement insertTextPlaceholder
   }
