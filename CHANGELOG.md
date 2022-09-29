@@ -1,3 +1,7 @@
+## 1.3.1
+
+* temp fix for newer flutter release
+
 ## 1.3.0
 
 * aligned with Flutter 3.0 release
