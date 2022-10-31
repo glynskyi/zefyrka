@@ -1,3 +1,7 @@
+## 1.3.2
+
+* temp fix for newer flutter release
+
 ## 1.3.1
 
 * temp fix for newer flutter release
