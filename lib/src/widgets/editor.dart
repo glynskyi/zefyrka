@@ -1321,6 +1321,12 @@ class RawEditorState extends EditorState
   }
 
   @override
+  void didChangeInputControl(
+      TextInputControl? oldControl, TextInputControl? newControl) {
+    // TODO: implement didChangeInputControl
+  }
+
+  @override
   void insertTextPlaceholder(Size size) {
     // TODO: implement insertTextPlaceholder
   }
