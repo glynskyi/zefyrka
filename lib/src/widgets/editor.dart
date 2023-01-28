@@ -1324,6 +1324,17 @@ class RawEditorState extends EditorState
   void removeTextPlaceholder() {
     // TODO: implement removeTextPlaceholder
   }
+
+  @override
+  void didChangeInputControl(
+      TextInputControl? oldControl, TextInputControl? newControl) {
+    // TODO: implement didChangeInputControl
+  }
+
+  @override
+  void performSelector(String selectorName) {
+    // TODO: implement performSelector
+  }
 }
 
 class _Editor extends MultiChildRenderObjectWidget {
