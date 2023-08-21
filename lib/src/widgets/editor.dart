@@ -1340,6 +1340,9 @@ class RawEditorState extends EditorState
   void insertContent(KeyboardInsertedContent content) {
     // TODO: implement insertContent
   }
+
+  @override
+  bool get liveTextInputEnabled => false;
 }
 
 class _Editor extends MultiChildRenderObjectWidget {
