@@ -736,7 +736,6 @@ class RawEditorState extends EditorState
 
   // Cursors
   CursorController? _cursorController;
-  FloatingCursorController? _floatingCursorController;
 
   // Keyboard
   late keyboard.KeyboardListener _keyboardListener;
@@ -1343,6 +1342,18 @@ class RawEditorState extends EditorState
 
   @override
   bool get liveTextInputEnabled => false;
+
+  @override
+  // TODO: implement lookUpEnabled
+  bool get lookUpEnabled => false;
+
+  @override
+  // TODO: implement searchWebEnabled
+  bool get searchWebEnabled => false;
+
+  @override
+  // TODO: implement shareEnabled
+  bool get shareEnabled => false;
 }
 
 class _Editor extends MultiChildRenderObjectWidget {
