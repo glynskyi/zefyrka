@@ -34,8 +34,7 @@ final doc =
 enum _Options { darkTheme }
 
 class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
-  final ZefyrController _controller =
-      ZefyrController(NotusDocument.fromJson(json.decode(doc)));
+  final ZefyrController _controller = ZefyrController(NotusDocument.fromJson(json.decode(doc)));
   final FocusNode _focusNode = FocusNode();
   bool _editing = false;
   late StreamSubscription<NotusChange> _sub;
@@ -87,9 +86,9 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
     return Theme(data: ThemeData(primarySwatch: Colors.cyan), child: result);
   }
 
-  void _launchUrl(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+  void _launchUrl(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     }
   }
 

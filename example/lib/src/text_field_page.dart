@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notus_format/notus_format.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zefyrka/zefyrka.dart';
 
@@ -69,10 +67,10 @@ class _TextFieldScreenState extends State<TextFieldScreen> {
     );
   }
 
-  void _launchUrl(String url) async {
-    final result = await canLaunch(url);
+  void _launchUrl(Uri url) async {
+    final result = await canLaunchUrl(url);
     if (result) {
-      await launch(url);
+      await launchUrl(url);
     }
   }
 }

@@ -1,3 +1,11 @@
+## 1.6.0
+
+* aligned with Flutter 3.19 release
+
+## 1.5.0
+
+* aligned with Flutter 3.12 release
+
 ## 1.4.0
 
 * aligned with Flutter 3.7 release

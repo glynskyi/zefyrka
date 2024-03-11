@@ -5,25 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:notus_format/notus_format.dart';
-import 'package:zefyrka/src/services/clipboard_controller.dart';
-import 'package:zefyrka/src/services/simple_clipboard_controller.dart';
 import 'package:zefyrka/src/widgets/baseline_proxy.dart';
 import 'package:zefyrka/zefyrka.dart';
 
-import '../rendering/editor.dart';
 import '../services/keyboard.dart' as keyboard;
-import 'controller.dart';
-import 'cursor.dart';
 import 'editable_text_block.dart';
 import 'editable_text_line.dart';
 import 'editor_input_client_mixin.dart';
 import 'editor_keyboard_mixin.dart';
 import 'editor_selection_delegate_mixin.dart';
-import 'text_line.dart';
 import 'text_selection.dart';
-import 'theme.dart';
 
 /// Builder function for embeddable objects in [ZefyrEditor].
 typedef ZefyrEmbedBuilder = Widget Function(
@@ -193,7 +184,7 @@ class ZefyrEditor extends StatefulWidget {
   final bool? showSelectionHandles;
 
   /// Callback to invoke when user wants to launch a URL.
-  final ValueChanged<String>? onLaunchUrl;
+  final ValueChanged<Uri>? onLaunchUrl;
 
   /// Builder function for embeddable objects.
   ///
@@ -409,8 +400,8 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
     if (segment.style.contains(NotusAttribute.link) &&
         editor.widget.onLaunchUrl != null) {
       if (editor.widget.readOnly) {
-        editor.widget
-            .onLaunchUrl!(segment.style.get(NotusAttribute.link)!.value!);
+        final url = Uri.parse(segment.style.get(NotusAttribute.link)!.value!);
+        editor.widget.onLaunchUrl!(url);
       } else {
         // TODO: Implement a toolbar to display the URL and allow to launch it.
         // editor.showToolbar();
@@ -555,7 +546,7 @@ class RawEditor extends StatefulWidget {
 
   /// Callback which is triggered when the user wants to open a URL from
   /// a link in the document.
-  final ValueChanged<String>? onLaunchUrl;
+  final ValueChanged<Uri>? onLaunchUrl;
 
   /// Configuration of toolbar options.
   ///
@@ -1064,7 +1055,7 @@ class RawEditorState extends EditorState
     SchedulerBinding.instance.addPostFrameCallback((Duration _) {
       _showCaretOnScreenScheduled = false;
 
-      final viewport = RenderAbstractViewport.of(renderEditor)!;
+      final viewport = RenderAbstractViewport.of(renderEditor);
       final editorOffset =
           renderEditor.localToGlobal(Offset(0.0, 0.0), ancestor: viewport);
       final offsetInViewport = _scrollController!.offset + editorOffset.dy;
@@ -1343,6 +1334,15 @@ class RawEditorState extends EditorState
 
   @override
   bool get liveTextInputEnabled => false;
+
+  @override
+  bool get lookUpEnabled => true;
+
+  @override
+  bool get searchWebEnabled => true;
+
+  @override
+  bool get shareEnabled => true;
 }
 
 class _Editor extends MultiChildRenderObjectWidget {

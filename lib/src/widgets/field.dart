@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'controller.dart';
@@ -127,7 +126,7 @@ class ZefyrField extends StatefulWidget {
   final ScrollPhysics? scrollPhysics;
 
   /// Callback to invoke when user wants to launch a URL.
-  final ValueChanged<String>? onLaunchUrl;
+  final ValueChanged<Uri>? onLaunchUrl;
 
   final InputDecoration? decoration;
 
