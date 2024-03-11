@@ -12,7 +12,7 @@ Zefyrka is a fork of Zefyr package with the following improvements:
 
 For documentation see [https://github.com/gkynskyi/zefyrka](https://github.com/glynskyi/zefyrka).
 
-![zefyrka screenshot](https://github.com/glynskyi/zefyrka/raw/main/assets/zefyr-1.png)
+<img alt="zefyrka screenshot" src="https://github.com/glynskyi/zefyrka/raw/main/assets/zefyr-1.png" width="400">
 
 ## Usage
 
